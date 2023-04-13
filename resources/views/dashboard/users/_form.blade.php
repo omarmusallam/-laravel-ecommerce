@@ -15,10 +15,6 @@
     <x-form.input label="Email" type="email" name="email" :value="$user->email" />
 </div>
 
-<div class="form-group">
-    <x-form.input label="Password" type="password" name="password" required autocomplete="new-password" />
-</div>
-
 <fieldset>
     <legend>{{ __('Roles') }}</legend>
 

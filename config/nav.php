@@ -24,7 +24,7 @@ return [
     ],
     [
         'icon' => 'fas fa-receipt nav-icon',
-        'route' => 'dashboard.categories.index',
+        'route' => 'dashboard.orders.index',
         'title' => 'Orders',
         'active' => 'dashboard.orders.*',
         'ability' => 'orders.view'

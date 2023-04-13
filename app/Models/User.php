@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Concerns\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,11 +56,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile()
+    public function scopeFilter(Builder $builder, $filters)
     {
-        return $this->hasOne(Profile::class, 'user_id', 'id')->withDefault('');
+        if ($filters['name'] ?? false) {
+            $builder->where('users.name', 'LIKE', "%{$filters['name']}%");
+        }
+        if ($filters['email'] ?? false) {
+            $builder->where('users.email', 'LIKE', "%{$filters['email']}%");
+        }
     }
-
+    
+    public function userprofile()
+    {
+        return $this->hasOne(UserProfile::class, 'user_id', 'id')
+            ->withDefault();
+    }
     public function setProviderTokenAttribute($value)
     {
         $this->attributes['provider_token'] = Crypt::encryptString($value);

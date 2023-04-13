@@ -7,10 +7,9 @@
 @section('content')
     <div class="mb-5">
         @if (Auth::user()->can('categories.create'))
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+            <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a>
         @endif
-        <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a>
-
     </div>
 
     <x-alert type="success" />
@@ -44,7 +43,7 @@
                     <tr>
                         <td><img src="{{ asset('storage/' . $category->image) }}" alt="" height="50px"></td>
                         <td>{{ $category->id }}</td>
-                        <td><a href="{{ route('dashboard.categories.edit', $category->id) }}">{{ $category->name }}</a></td>
+                        <td><a href="{{ route('dashboard.categories.show', $category->id) }}">{{ $category->name }}</a></td>
                         <td>{{ $category->parent->name }}</td>
                         <td>{{ $category->products_count }}</td>
                         <td>{{ $category->status }}</td>
@@ -52,16 +51,16 @@
                         <td>
                             @can('categories.update')
                                 <a href="{{ route('dashboard.categories.edit', $category->id) }}"
-                                class="btn btn-sm btn-outline-success">Edite</a>
+                                    class="btn btn-sm btn-outline-success">Edite</a>
                             @endcan
                         </td>
                         <td>
                             @can('categories.delete')
-                            <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="POST">
-                                @method('delete')
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                            </form>
+                                <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="POST">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
                             @endcan
                         </td>
                     </tr>

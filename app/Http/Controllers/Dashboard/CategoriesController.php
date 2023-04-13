@@ -93,10 +93,12 @@ class CategoriesController extends Controller
      */
     public function show(Category $category)
     {
-        if (!Gate::allows('categories.view')) {
+        if (Gate::denies('categories.view')) {
             abort(403);
         }
-        return view('dashboard.categories.show', compact('category'));
+        return view('dashboard.categories.show', [
+            'category' => $category
+        ]);
     }
 
     /**

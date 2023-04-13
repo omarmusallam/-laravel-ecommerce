@@ -5,22 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class UserProfile extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'admin_id';
+    protected $primaryKey = 'user_id';
 
     protected $fillable = [
-        'admin_id', 'first_name', 'last_name', 'birthday', 'gender',
+        'user_id', 'first_name', 'last_name', 'birthday', 'gender',
         'street_address', 'city', 'state', 'postal_code', 'country',
-        'locale',
+        'locale', 'profile_photo_path',
     ];
 
-    public function admin()
+    public function user()
     {
-        return $this->belongsTo(Admin::class, 'admin_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
 }

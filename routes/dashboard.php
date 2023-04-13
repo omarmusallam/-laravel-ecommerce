@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AdminsController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ImportProductsController;
+use App\Http\Controllers\Dashboard\OrdersController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\ProfileCotroller;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Dashboard\UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'middleware' => ['auth:admin,web'],
+    'middleware' => ['auth:admin'],
     'as' => 'dashboard.',
     'prefix' => 'admin/dashboard',
     //'namespace' => 'App\Http\Controllers\Dashboard',
@@ -38,6 +39,7 @@ Route::group([
     Route::resources([
         'products' => ProductsController::class,
         'categories' => CategoriesController::class,
+        'orders' => OrdersController::class,
         'roles' => RolesController::class,
         'users' => UsersController::class,
         'admins' => AdminsController::class,

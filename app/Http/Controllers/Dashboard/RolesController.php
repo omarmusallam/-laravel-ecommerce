@@ -12,7 +12,7 @@ class RolesController extends Controller
 
     public function __construct()
     {
-        $this->authorizeResource(Role::class, 'role');    
+        $this->authorizeResource(Role::class, 'role');
     }
 
     /**
@@ -22,7 +22,9 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate();
+        $request = request();
+        $roles = Role::filter($request->query())
+            ->paginate();
         return view('dashboard.roles.index', compact('roles'));
     }
 
@@ -78,7 +80,7 @@ class RolesController extends Controller
     public function edit(Role $role)
     {
         $role_abilities = $role->abilities()->pluck('type', 'ability')->toArray();
-        
+
         return view('dashboard.roles.edit', compact('role', 'role_abilities'));
     }
 
@@ -95,9 +97,9 @@ class RolesController extends Controller
             'name' => 'required|string|max:255',
             'abilities' => 'required|array',
         ]);
-        
+
         $role->updateWithAbilities($request);
-        
+
         return redirect()
             ->route('dashboard.roles.index')
             ->with('success', 'Role updated successfully');

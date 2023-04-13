@@ -20,8 +20,9 @@ class UsersController extends Controller
     public function index()
     {
         Gate::authorize('users.view');
-
-        $users = User::paginate();
+        $request = request();
+        $users = User::filter($request->query())
+            ->paginate();
         return view('dashboard.users.index', compact('users'));
     }
 
@@ -50,8 +51,8 @@ class UsersController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:9'],
-            'roles' => 'required|array',
+            'password' => ['nullable', 'min:9'],
+            'roles' => 'nullable|array',
         ]);
 
         $user = User::create([
@@ -101,10 +102,10 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('categories', 'name')->ignore($user)],
-            'password' => ['required', 'min:9'],
-            'roles' => 'required|array',
+            'name' => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('categories', 'name')->ignore($user)],
+            'password' => ['nullable', 'min:9'],
+            'roles' => 'nullable|array',
         ]);
 
         $user->update($request->all());

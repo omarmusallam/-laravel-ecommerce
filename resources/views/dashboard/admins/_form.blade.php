@@ -20,10 +20,6 @@
 <div class="form-group">
     <x-form.input label="Phone Number" name="phone_number" :value="$admin->phone_number" />
 </div>
-<div class="form-group">
-    <x-form.input label="Password" type="password" name="password" required
-        autocomplete="new-password" />
-</div>
 
 <fieldset>
     <legend>{{ __('Roles') }}</legend>

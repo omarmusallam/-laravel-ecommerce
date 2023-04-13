@@ -102,7 +102,8 @@
                             @auth
                                 <div class="user">
                                     <i class="lni lni-user"></i>
-                                    {{ Auth::user()->name }}
+                                    <a href="{{ route('user-profile.edit') }}" style="color: #fff">{{ Auth::user()->name }}</a>
+                                    
                                 </div>
                                 <ul class="user-login">
                                     <li>

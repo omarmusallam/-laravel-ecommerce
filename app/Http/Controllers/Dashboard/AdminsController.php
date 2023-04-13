@@ -24,7 +24,9 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        $admins = Admin::paginate();
+        $request = request();
+        $admins = Admin::filter($request->query())
+            ->paginate();
         return view('dashboard.admins.index', compact('admins'));
     }
 
@@ -56,7 +58,6 @@ class AdminsController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'username' => ['required', 'string', 'max:32', 'unique:admins,username'],
             'phone_number' => 'required|min:9|numeric',
-            'password' => ['required', 'min:9'],
             'roles' => 'array',
         ]);
 
@@ -65,7 +66,6 @@ class AdminsController extends Controller
             'email' => $request['email'],
             'username' => $request['username'],
             'phone_number' => $request['phone_number'],
-            'password' => Hash::make($request['password']),
         ]);
 
         $admin->roles()->attach($request->roles);
@@ -110,11 +110,10 @@ class AdminsController extends Controller
     public function update(Request $request, Admin $admin)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('admins', 'name')->ignore($admin)],
-            'username' => ['required', 'string', 'max:32', Rule::unique('admins', 'username')->ignore($admin)],
-            'phone_number' => 'required|min:9|numeric',
-            'password' => ['required', 'min:9'],
+            'name' => 'nullable|string|max:255',
+            'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('admins', 'name')->ignore($admin)],
+            'username' => ['nullable', 'string', 'max:32', Rule::unique('admins', 'username')->ignore($admin)],
+            'phone_number' => 'nullable|min:9|numeric',
             'roles' => 'array',
         ]);
 

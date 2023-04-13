@@ -32,7 +32,7 @@ class OrderCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
         // return ['mail', 'database', 'broadcast'];
 
         $channels = ['database'];

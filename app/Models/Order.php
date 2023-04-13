@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,17 @@ class Order extends Model
         return $this->belongsTo(User::class)->withDefault([
             'name' => 'Guest Customer'
         ]);
+    }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'order_id')->withDefault(['method' => 'No','amount' => 'No','currency' => 'No', ]);
+    }
+
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        if ($filters['name'] ?? false) {
+            $builder->where('orders.number', 'LIKE', "%{$filters['name']}%");
+        }
     }
 
     public function products()

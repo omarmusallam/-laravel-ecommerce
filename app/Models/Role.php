@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -14,6 +15,13 @@ class Role extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        if ($filters['name'] ?? false) {
+            $builder->where('roles.name', 'LIKE', "%{$filters['name']}%");
+        }
+    }
 
     public function abilities()
     {
