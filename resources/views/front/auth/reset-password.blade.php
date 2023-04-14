@@ -5,11 +5,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
-                    @if ($errors->has(config('fortify.username')))
-                        <div class="alert alert-danger">
-                            {{ $errors->first(config('fortify.username')) }}
-                        </div>
-                    @endif
                     <form class="card login-form" action="{{ route('password.update') }}" method="post">
                         @csrf
                         <input type="hidden" name="token" value="{{ $request->route('token') }}">
@@ -17,6 +12,7 @@
                             <div class="title">
                                 <h3>Reset Password</h3>
                             </div>
+                            <x-auth-validation-errors style="color: red" class="mb-4" :errors="$errors" />
                             <div class="form-group input-group">
                                 <label for="email">Email</label>
                                 <input class="form-control" type="email" name="email" id="email" required

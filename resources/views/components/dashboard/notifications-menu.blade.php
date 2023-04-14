@@ -6,18 +6,22 @@
         @endif
     </a>
     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-header">{{ $newCount }} Notifications</span>
+        <div>
+            <span style="display: inline; text-align: center" class="dropdown-header">{{ $newCount }}
+                Notifications</span>
+            <a href="{{ route('dashboard.notification.markAsRead') }}" style="display: inline"
+                class="dropdown-header float-right">Marks all</a>
+        </div>
         <div class="dropdown-divider"></div>
         @foreach ($notifications as $notification)
-            <a href="{{ $notification->data['url'] }} ? notification_id={{ $notification->id }}"
-                class="dropdown-item text-wrap @if ($notification->unread()) text-bold @endif">
+            <a href="{{ route('dashboard.orders.show', $notification->data['order_id']) }}"
+                class="dropdown-item text-wrap text-bold">
                 <i class="{{ $notification->data['icon'] }} mr-2"></i> {{ $notification->data['body'] }}
                 <span
                     class="float-right text-muted text-sm">{{ $notification->created_at->longAbsoluteDiffForHumans() }}</span>
             </a>
             <div class="dropdown-divider"></div>
         @endforeach
-        {{-- {{ $notifications->withQueryString()->links() }} --}}
-        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        <a href="{{ route('dashboard.notification') }}" class="dropdown-item dropdown-footer">See All Notifications</a>
     </div>
 </li>

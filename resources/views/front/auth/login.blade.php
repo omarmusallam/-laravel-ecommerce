@@ -56,7 +56,7 @@
                                 <button class="btn" type="submit">Login</button>
                             </div>
                             @if (Route::has('register'))
-                                <p class="outer-link">Don't have an account? <a href="{{ route('register') }}">Register
+                                <p class="outer-link">Don't have an account? <a href="{{ route('user.register') }}">Register
                                         here </a>
                                 </p>
                             @endif

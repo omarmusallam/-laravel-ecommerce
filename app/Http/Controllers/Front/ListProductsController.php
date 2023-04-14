@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -16,11 +17,15 @@ class ListProductsController extends Controller
      */
     public function index()
     {
+        $request = request();
         $products = Product::with('category')->active()
             ->latest()
-            // ->limit(8)
+            ->filter2($request->query())
             ->paginate(15);
-        return view('front.list-product', compact('products'));
+
+        $categories = Category::withCount('products')->get();
+
+        return view('front.list-product', compact('products', 'categories'));
     }
 
     /**

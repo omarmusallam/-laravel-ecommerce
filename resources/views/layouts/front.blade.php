@@ -102,8 +102,9 @@
                             @auth
                                 <div class="user">
                                     <i class="lni lni-user"></i>
-                                    <a href="{{ route('user-profile.edit') }}" style="color: #fff">{{ Auth::user()->name }}</a>
-                                    
+                                    <a href="{{ route('user-profile.edit') }}"
+                                        style="color: #fff">{{ Auth::user()->name }}</a>
+
                                 </div>
                                 <ul class="user-login">
                                     <li>
@@ -125,7 +126,7 @@
                                         <a href="{{ route('login') }}">{{ Lang::get('Sign In') }}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        <a href="{{ route('user.register') }}">{{ __('Register') }}</a>
                                     </li>
                                 </ul>
                             @endauth
@@ -206,31 +207,11 @@
                         <div class="mega-category-menu">
                             <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>
                             <ul class="sub-category">
-                                <li><a href="#">Electronics <i class="lni lni-chevron-right"></i></a>
-                                    <ul class="inner-sub-category">
-                                        <li><a href="#">Digital Cameras</a></li>
-                                        <li><a href="#">Camcorders</a></li>
-                                        <li><a href="#">Camera Drones</a></li>
-                                        <li><a href="#">Smart Watches</a></li>
-                                        <li><a href="#">Headphones</a></li>
-                                        <li><a href="#">MP3 Players</a></li>
-                                        <li><a href="#">Microphones</a></li>
-                                        <li><a href="#">Chargers</a></li>
-                                        <li><a href="#">Batteries</a></li>
-                                        <li><a href="#">Cables & Adapters</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">accessories</a></li>
-                                <li><a href="#">Televisions</a></li>
-                                <li><a href="#">best selling</a></li>
-                                <li><a href="#">top 100 offer</a></li>
-                                <li><a href="#">sunglass</a></li>
-                                <li><a href="#">watch</a></li>
-                                <li><a href="#">man’s product</a></li>
-                                <li><a href="#">Home Audio & Theater</a></li>
-                                <li><a href="#">Computers & Tablets </a></li>
-                                <li><a href="#">Video Games </a></li>
-                                <li><a href="#">Home Appliances </a></li>
+                                @if ($categories->count())
+                                    @foreach ($categories as $category)
+                                        <li><a href="#">{{ $category->name }}<span>({{ $category->products_count }})</span></a></li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                         <!-- End Mega Category Menu -->

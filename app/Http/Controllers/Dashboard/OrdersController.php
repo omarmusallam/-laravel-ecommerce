@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class OrdersController extends Controller
@@ -21,12 +23,15 @@ class OrdersController extends Controller
         return view('dashboard.orders.index', compact('orders'));
     }
 
-    public function show(Order $order)
+    public function show($id)
     {
         if (!Gate::allows('orders.view')) {
             abort(403);
         }
-
+        $order = Order::findOrFail($id);
+        $getID = DB::table('notifications')->where('data->order_id', $id)->pluck('id');
+        Notification::where('id', $getID)->update(['read_at' => now()]);
+        
         return view('dashboard.orders.show', compact('order'));
     }
 

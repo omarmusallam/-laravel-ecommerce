@@ -25,6 +25,11 @@ Route::group([
     Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard');
 
+    Route::get('/notification', [DashboardController::class, 'notify'])
+        ->name('notification');
+    Route::get('/notification/markAsRead', [DashboardController::class, 'markAsRead'])
+        ->name('notification.markAsRead');
+
     Route::get('/categories/trash', [CategoriesController::class, 'trash'])
         ->name('categories.trash');
     Route::put('categories/{category}/restore', [CategoriesController::class, 'restore'])

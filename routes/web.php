@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
@@ -33,6 +34,9 @@ Route::group([
 ], function () {
     Route::get('user-profile', [UserProfileController::class, 'edit'])->name('user-profile.edit');
     Route::patch('user-profile', [UserProfileController::class, 'update'])->name('user-profile.update');
+
+    Route::get('user/register', [UserProfileController::class, 'create'])->name('user.register');
+    Route::post('user/register', [UserProfileController::class, 'store'])->name('user.register');
 
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');

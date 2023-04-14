@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Exceptions\InvalidOrderException;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Repositories\Cart\CartRepository;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -27,8 +25,10 @@ class PaymentsController extends Controller
             return $item->price * $item->quantity;
         });
 
+        /**
+         * @var \Stripe\StripeClient
+         */
         $stripe = App::make('stripe.client');
-        // $stripe = new \Stripe\StripeClient(config('services.stripe.secret_key'));
         $paymentIntent = $stripe->paymentIntents->create([
             'amount' => $amount,
             'currency' => 'usd',
@@ -60,12 +60,15 @@ class PaymentsController extends Controller
     public function confirm(Request $request, Order $order)
     {
 
+        /**
+         * @var \Stripe\StripeClient
+         */
         $stripe = App::make('stripe.client');
-        // $stripe = new \Stripe\StripeClient(config('services.stripe.secret_key'));
         $paymentIntent = $stripe->paymentIntents->retrieve(
             $request->query('payment_intent'),
             []
         );
+
 
         if ($paymentIntent->status == 'succeeded') {
             try {

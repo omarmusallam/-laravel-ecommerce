@@ -2,12 +2,15 @@
 
 namespace App\View\Components;
 
+use App\Models\Category;
 use Illuminate\View\Component;
 
 class FrontLayout extends Component
 {
 
     public $title;
+
+    public $categories;
 
     /**
      * Create a new component instance.
@@ -17,6 +20,7 @@ class FrontLayout extends Component
     public function __construct($title = null)
     {
         $this->title = $title ?? config('app.name');
+        $this->categories = Category::withCount('products')->get(); 
     }
 
     /**

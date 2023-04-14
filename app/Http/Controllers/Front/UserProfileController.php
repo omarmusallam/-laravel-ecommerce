@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Languages;
 
@@ -42,18 +44,32 @@ class UserProfileController extends Controller
 
         $user->userprofile->fill($request->all())->save();
 
-        // if ($profile->first_name) {
-        //     $profile->update($request->all());
-        // } else {
-        //     $request->merge([
-        //         'user_id' => $user->id,
-        //     ]);
-        //     UserProfile::create($request->all());
-
-        //     $user->userprofile()->create($request->all());
-        // }
-
         return redirect()->route('user-profile.edit')
             ->with('success', 'Profile updated!');
+    }
+
+    public function create()
+    {
+        return view('front.auth.register');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'min:9'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('home');
     }
 }
