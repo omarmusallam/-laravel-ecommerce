@@ -23,6 +23,10 @@ class ListProductsController extends Controller
             ->filter2($request->query())
             ->paginate(15);
 
+        if ($request->category) {
+            $products = Category::where('slug', $request->category)->firstOrFail()->products()->paginate(15);
+        }
+
         $categories = Category::withCount('products')->get();
 
         return view('front.list-product', compact('products', 'categories'));
@@ -35,7 +39,7 @@ class ListProductsController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

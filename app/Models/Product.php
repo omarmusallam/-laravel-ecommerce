@@ -42,8 +42,8 @@ class Product extends Model
 
     public function scopeFilter2(Builder $builder, $filters)
     {
-        if ($filters['name'] ?? false) {
-            $builder->where('products.name', 'LIKE', "%{$filters['name']}%");
+        if ($filters['slug'] ?? false) {
+            $builder->where('products.slug', 'LIKE', "%{$filters['slug']}%");
         }
         if ($filters['status'] ?? false) {
             $builder->where('products.status', '=', $filters['status']);

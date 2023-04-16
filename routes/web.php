@@ -15,6 +15,7 @@ use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Front\UserProfileController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StripeWebhooksController;
+use App\Http\Livewire\ShowProducts;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -32,6 +33,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
 ], function () {
+    
     Route::get('user-profile', [UserProfileController::class, 'edit'])->name('user-profile.edit');
     Route::patch('user-profile', [UserProfileController::class, 'update'])->name('user-profile.update');
 

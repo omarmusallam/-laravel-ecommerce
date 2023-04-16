@@ -149,30 +149,21 @@
                     </div>
                     <div class="col-lg-5 col-md-7 d-xs-none">
                         <!-- Start Main Menu Search -->
-                        <div class="main-menu-search">
-                            <!-- navbar search start -->
-                            <div class="navbar-search search-style-5">
-                                <div class="search-select">
-                                    <div class="select-position">
-                                        <select id="select1">
-                                            <option selected>All</option>
-                                            <option value="1">option 01</option>
-                                            <option value="2">option 02</option>
-                                            <option value="3">option 03</option>
-                                            <option value="4">option 04</option>
-                                            <option value="5">option 05</option>
-                                        </select>
+                        <form action="{{ route('list-products.index') }}" method="get">
+                            <div class="main-menu-search">
+                                <!-- navbar search start -->
+                                <div class="navbar-search search-style-5">
+                                    <div class="search-input">
+                                        <x-form.input name="slug" placeholder="Search" :value="request('slug')" />
+                                    </div>
+                                    <div class="search-btn">
+                                        <button><i class="lni lni-search-alt"></i></button>
                                     </div>
                                 </div>
-                                <div class="search-input">
-                                    <input type="text" placeholder="Search">
-                                </div>
-                                <div class="search-btn">
-                                    <button><i class="lni lni-search-alt"></i></button>
-                                </div>
+                                <!-- navbar search Ends -->
                             </div>
-                            <!-- navbar search Ends -->
-                        </div>
+                        </form>
+
                         <!-- End Main Menu Search -->
                     </div>
                     <div class="col-lg-4 col-md-2 col-5">
@@ -209,7 +200,9 @@
                             <ul class="sub-category">
                                 @if ($categories->count())
                                     @foreach ($categories as $category)
-                                        <li><a href="#">{{ $category->name }}<span>({{ $category->products_count }})</span></a></li>
+                                        <li><a
+                                                href="{{ route('list-products.index', ['category' => $category->slug]) }}">{{ $category->name }}<span>({{ $category->products_count }})</span></a>
+                                        </li>
                                     @endforeach
                                 @endif
                             </ul>

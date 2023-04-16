@@ -38,10 +38,10 @@
                             <p>Quantity</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>Subtotal</p>
+                            <p>Price</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>Discount</p>
+                            <p>Subtotal</p>
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
                             <p>Remove</p>
@@ -61,7 +61,7 @@
                                 <h5 class="product-name"><a href="{{ route('products.show', $item->product->slug) }}">
                                         {{ $item->product->name }}</a></h5>
                                 <p class="product-des">
-                                    <span><em>Type:</em> Mirrorless</span>
+                                    <span><em>Brand:</em> {{ $item->product->category->name }}</span>
                                     <span><em>Color:</em> Black</span>
                                 </p>
                             </div>
@@ -72,10 +72,10 @@
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
-                                <p>{{ Currency::format($item->quantity * $item->product->price) }}</p>
+                                <p>{{ Currency::format($item->product->price) }}</p>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
-                                <p>{{ Currency::format(0) }}</p>
+                                <p>{{ Currency::format($item->quantity * $item->product->price) }}</p>
                             </div>
                             <div class="col-lg-1 col-md-2 col-12">
                                 <a class="remove-item" data-id="{{ $item->id }}" href="javascript:void(0)"><i
@@ -108,12 +108,12 @@
                                     <ul>
                                         <li>Cart Subtotal<span>{{ Currency::format($cart->total()) }}</span></li>
                                         <li>Shipping<span>Free</span></li>
-                                        <li>You Save<span>$29.00</span></li>
-                                        <li class="last">You Pay<span>$2531.00</span></li>
+                                        <li>Tax<span>$00.00</span></li>
+                                        <li class="last">You Pay<span>{{ Currency::format($cart->total()) }}</span></li>
                                     </ul>
                                     <div class="button">
                                         <a href="{{ route('checkout') }}" class="btn">Checkout</a>
-                                        <a href="product-grids.html" class="btn btn-alt">Continue shopping</a>
+                                        <a href="{{ route('list-products.index') }}" class="btn btn-alt">Continue shopping</a>
                                     </div>
                                 </div>
                             </div>

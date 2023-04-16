@@ -248,12 +248,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">GoPro Hero4 Silver</a>
+                                <a href="#">GoPro Hero4 Silver</a>
                             </h3>
                             <span>$287.99</span>
                         </div>
@@ -262,12 +262,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Puro Sound Labs BT2200</a>
+                                <a href="#">Puro Sound Labs BT2200</a>
                             </h3>
                             <span>$95.00</span>
                         </div>
@@ -276,12 +276,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">HP OfficeJet Pro 8710</a>
+                                <a href="#">HP OfficeJet Pro 8710</a>
                             </h3>
                             <span>$120.00</span>
                         </div>
@@ -293,12 +293,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">iPhone X 256 GB Space Gray</a>
+                                <a href="#">iPhone X 256 GB Space Gray</a>
                             </h3>
                             <span>$1150.00</span>
                         </div>
@@ -307,12 +307,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Canon EOS M50 Mirrorless Camera</a>
+                                <a href="#">Canon EOS M50 Mirrorless Camera</a>
                             </h3>
                             <span>$950.00</span>
                         </div>
@@ -321,12 +321,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Microsoft Xbox One S</a>
+                                <a href="#">Microsoft Xbox One S</a>
                             </h3>
                             <span>$298.00</span>
                         </div>
@@ -338,12 +338,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Samsung Gear 360 VR Camera</a>
+                                <a href="#">Samsung Gear 360 VR Camera</a>
                             </h3>
                             <span>$68.00</span>
                         </div>
@@ -352,12 +352,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Samsung Galaxy S9+ 64 GB</a>
+                                <a href="#">Samsung Galaxy S9+ 64 GB</a>
                             </h3>
                             <span>$840.00</span>
                         </div>
@@ -366,12 +366,12 @@
                     <!-- Start Single List -->
                     <div class="single-list">
                         <div class="list-image">
-                            <a href="product-grids.html"><img src="https://via.placeholder.com/100x100"
+                            <a href="#"><img src="https://via.placeholder.com/100x100"
                                     alt="#"></a>
                         </div>
                         <div class="list-info">
                             <h3>
-                                <a href="product-grids.html">Zeus Bluetooth Headphones</a>
+                                <a href="#">Zeus Bluetooth Headphones</a>
                             </h3>
                             <span>$28.00</span>
                         </div>
@@ -384,7 +384,7 @@
     <!-- End Home Product List -->
 
     <!-- Start Blog Section Area -->
-    <section class="blog-section section">
+    {{-- <section class="blog-section section">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -465,7 +465,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- End Blog Section Area -->
 
     <!-- Start Shipping Info -->
