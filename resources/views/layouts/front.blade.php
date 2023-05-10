@@ -54,7 +54,7 @@
                                             <select name="currency_code" onchange="this.form.submit()">
                                                 <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
                                                 <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
-                                                <option value="ILS" @selected('ILS' == session('currency_code'))>$ ILS</option>
+                                                <option value="ILS" @selected('ILS' == session('currency_code'))>₪ ILS</option>
                                                 <option value="JOD" @selected('JOD' == session('currency_code'))>₹ JOD</option>
                                                 <option value="SAR" @selected('SAR' == session('currency_code'))>¥ SAR</option>
                                                 <option value="QAR" @selected('QAR' == session('currency_code'))>৳ QAR</option>
@@ -232,9 +232,6 @@
                                             <li class="nav-item"><a href="{{ route('faq') }}">Faq</a></li>
                                             <li class="nav-item"><a href="{{ route('login') }}">Login</a></li>
                                             <li class="nav-item"><a href="{{ route('register') }}">Register</a></li>
-                                            <li class="nav-item"><a href="{{ route('mail-success') }}">Mail
-                                                    Success</a></li>
-                                            <li class="nav-item"><a href="{{ route('404') }}">404 Error</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">
@@ -332,7 +329,8 @@
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
                                         <input name="EMAIL" placeholder="Email address here..." type="email">
                                         <div class="button">
-                                            <button class="btn">Subscribe<span class="dir-part"></span></button>
+                                            <button type="button" class="btn">Subscribe<span
+                                                    class="dir-part"></span></button>
                                         </div>
                                     </form>
                                 </div>

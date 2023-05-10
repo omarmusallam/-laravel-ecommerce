@@ -1,7 +1,7 @@
 
-(function($) {
+(function ($) {
 
-    $('.item-quantity').on('change', function(e) {
+    $('.item-quantity').on('change', function (e) {
 
         $.ajax({
             url: "/cart/" + $(this).data('id'), //data-id
@@ -13,7 +13,7 @@
         });
     });
 
-    $('.remove-item').on('click', function(e) {
+    $('.remove-item').on('click', function (e) {
 
         let id = $(this).data('id');
         $.ajax({
@@ -28,7 +28,22 @@
         });
     });
 
-    $('.add-to-cart').on('click', function(e) {
+    $('.remove').on('click', function (e) {
+
+        let id = $(this).data('id');
+        $.ajax({
+            url: "/cart/" + id, //data-id
+            method: 'delete',
+            data: {
+                _token: csrf_token
+            },
+            success: response => {
+                $(`#${id}`).remove();
+            }
+        });
+    });
+
+    $('.add-to-cart').on('click', function (e) {
 
         $.ajax({
             url: "/cart",

@@ -8,4 +8,5 @@ return [
     'signin' => 'تسجيل الدخول',
     'register' => 'التسجيل',
     'signout' => 'تسجيل خروج',
+    'Search Product' => 'بحث النتجات'
 ];

@@ -11,16 +11,18 @@
         </div>
         <ul class="shopping-list">
             @foreach ($items as $item)
-                <li>
-                    <a href="javascript:void(0)" class="remove" title="Remove this item"><i
+                <li id="{{ $item->id }}">
+                    <a href="javascript:void(0)" class="remove" title="Remove this item" data-id="{{ $item->id }}"><i
                             class="lni lni-close"></i></a>
                     <div class="cart-img-head">
                         <a class="cart-img" href="{{ route('products.show', $item->product->slug) }}"><img
                                 src="{{ $item->product->image_url }}" alt="#"></a>
                     </div>
                     <div class="content">
-                        <h4><a href="{{ route('products.show', $item->product->slug) }}">{{ $item->product->name }}</a></h4>
-                        <p class="quantity">{{ $item->quantity }}x - <span class="amount">{{ Currency::format($item->product->price) }}</span></p>
+                        <h4><a href="{{ route('products.show', $item->product->slug) }}">{{ $item->product->name }}</a>
+                        </h4>
+                        <p class="quantity">{{ $item->quantity }}x - <span
+                                class="amount">{{ Currency::format($item->product->price) }}</span></p>
                     </div>
                 </li>
             @endforeach
@@ -37,3 +39,12 @@
     </div>
     <!--/ End Shopping Item -->
 </div>
+
+{{-- @push('scripts') --}}
+    <script>
+        const csrf_token = "{{ csrf_token() }}";
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {{-- <script src="{{ asset('build/assets/js/cart.js') }}"></script> --}}
+{{-- @endpush --}}
+@vite('resources/js/cart.js')

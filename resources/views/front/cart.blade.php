@@ -25,6 +25,7 @@
     <div class="shopping-cart section">
         <div class="container">
             <div class="cart-list-head">
+                <x-alert type="success" />
                 <!-- Cart List Title -->
                 <div class="cart-list-title">
                     <div class="row">
@@ -62,12 +63,16 @@
                                         {{ $item->product->name }}</a></h5>
                                 <p class="product-des">
                                     <span><em>Brand:</em> {{ $item->product->category->name }}</span>
-                                    <span><em>Color:</em> Black</span>
+                                    @if ($item->product->sale_percent)
+                                        <span
+                                            class=""><em>Discount: </em>-{{ $item->product->sale_percent }}%</span>
+                                    @endif
                                 </p>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
                                 <div class="count-input">
-                                    <input class="form-control item-quantity" data-id="{{ $item->id }}"
+                                    <input style="width: 100px" type="number" min="1" max="9"
+                                        class="form-control item-quantity" data-id="{{ $item->id }}"
                                         value="{{ $item->quantity }}">
                                 </div>
                             </div>
@@ -97,7 +102,7 @@
                                         <form action="#" target="_blank">
                                             <input name="Coupon" placeholder="Enter Your Coupon">
                                             <div class="button">
-                                                <button class="btn">Apply Coupon</button>
+                                                <button type="button" class="btn">Apply Coupon</button>
                                             </div>
                                         </form>
                                     </div>
@@ -109,11 +114,13 @@
                                         <li>Cart Subtotal<span>{{ Currency::format($cart->total()) }}</span></li>
                                         <li>Shipping<span>Free</span></li>
                                         <li>Tax<span>$00.00</span></li>
-                                        <li class="last">You Pay<span>{{ Currency::format($cart->total()) }}</span></li>
+                                        <li class="last">You Pay<span>{{ Currency::format($cart->total()) }}</span>
+                                        </li>
                                     </ul>
                                     <div class="button">
                                         <a href="{{ route('checkout') }}" class="btn">Checkout</a>
-                                        <a href="{{ route('list-products.index') }}" class="btn btn-alt">Continue shopping</a>
+                                        <a href="{{ route('list-products.index') }}" class="btn btn-alt">Continue
+                                            shopping</a>
                                     </div>
                                 </div>
                             </div>
