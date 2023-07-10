@@ -37,7 +37,7 @@ class CategoriesController extends Controller
             ->filter($request->query())
             ->orderby('categories.created_at')
             // ->withTrashed()
-            ->paginate(5); // return collection object
+            ->paginate(10); // return collection object
 
         return view('dashboard.categories.index', compact('categories'));
     }

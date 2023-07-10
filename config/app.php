@@ -71,7 +71,7 @@ return [
 
     'timezone' => 'Asia/Gaza',
 
-    'currency' => 'USD',
+    'currency' => 'ILS',
 
     'api_key' => env('API_TOKEN'),
 
@@ -86,7 +86,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ar',
 
     /*
     |--------------------------------------------------------------------------

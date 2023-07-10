@@ -19,7 +19,7 @@ class CheckoutController extends Controller
     public function create(CartRepository $cart)
     {
         if ($cart->get()->count() == 0) {
-            throw new InvalidOrderException('Cart is empty');
+            throw new InvalidOrderException(trans('Cart is empty'));
         }
         return view('front.checkout', [
             'cart' => $cart,

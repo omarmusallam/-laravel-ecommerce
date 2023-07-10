@@ -1,4 +1,4 @@
-<x-front-layout title="About">
+<x-front-layout title="{{ __('About Us') }}">
 
     <x-slot:breadcrumb>
         <div class="breadcrumbs">
@@ -6,13 +6,13 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="breadcrumbs-content">
-                            <h1 class="page-title">Cart</h1>
+                            <h1 class="page-title">{{ __('About Us') }}</h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li>About</li>
+                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> {{ __('Home') }}</a></li>
+                            <li>{{ __('About-us') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -34,15 +34,13 @@
                 <div class="col-lg-6 col-md-12 col-12">
                     <!-- content-1 start -->
                     <div class="content-right">
-                        <h2>ShopGrids - Your Trusted & Reliable Partner.</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id purus at risus
-                            pellentesque faucibus a quis eros. In eu fermentum leo. Integer ut eros lacus. Proin ut
-                            accumsan leo. Morbi vitae est eget dolor consequat aliquam eget quis dolor. Mauris rutrum
-                            fermentum erat, at euismod lorem pharetra nec. Duis erat lectus, ultrices euismod sagittis.
+                        <h2>{{ __('Golden Store - Perfumes & Gifts.') }}</h2>
+                        <p>{{ __('We are an online store for oud, incense, oriental and western perfumes. High quality and varied products for lovers of luxurious scents. Our collection is distinguished by its diversity and distinction, as it offers a wide variety of perfumes, essential oils, oud and incense. If you are looking for simple options, this experience makes you feel like you are in for a unique experience.') }}
                         </p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius mod tempor incididunt
-                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi aliquip ex ea commodo consequat.</p>
+                        <p>{{ __('We are keen to provide luxurious and original products, as we work with the most famous brands in the world of perfumes, incense and oud. We offer you an exceptional experience from our carefully selected collection, which combines cultural heritage with modern designs.') }}
+                        </p>
+                        <p>{{ __('We strive to serve your shopping, strive to provide excellent service. Our helpful and professional team is ready to assist you and answer your inquiries, whether from products or purchases.') }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -51,12 +49,12 @@
     <!-- End About Area -->
 
     <!-- Start Team Area -->
-    <section class="team section">
+    {{-- <section class="team section">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Our Core Team</h2>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">{{ __('Our Core Team') }}</h2>
                         <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
                             Ipsum available, but the majority have suffered alteration in some form.</p>
                     </div>
@@ -157,6 +155,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- End Team Area -->
 </x-front-layout>

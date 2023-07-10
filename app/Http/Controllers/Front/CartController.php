@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Repositories\Cart\CartModelRepository;
 use App\Repositories\Cart\CartRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class CartController extends Controller
 {
@@ -27,7 +28,7 @@ class CartController extends Controller
         // $item = $repository->get();
 
         return view('front.cart', [
-            'cart' =>  $this->cart,
+            'cart' => $this->cart,
         ]);
     }
 
@@ -48,13 +49,13 @@ class CartController extends Controller
         // $repository = new CartModelRepository();
         $this->cart->add($product, $request->post('quantity'));
 
-        if($request->expectsJson()){
+        if ($request->expectsJson()) {
             return response()->json([
                 'message' => 'Item added to cart!',
             ]);
         }
 
-        return redirect()->route('cart.index')->with('success', 'Product added to cart!');
+        return redirect()->route('cart.index')->with('success', trans('Product added to cart!'));
     }
 
     /**
@@ -79,12 +80,12 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         // $repository = new CartModelRepository();
         $this->cart->delete($id);
         return [
-            'message' => 'Item deleted!',
+            'message' => trans('Item deleted!'),
         ];
     }
 }

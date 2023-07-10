@@ -1,5 +1,5 @@
 <!-- Start Single Product -->
-<div class="single-product">
+<div class="single-product" id="{{ $product->id }}">
     <div class="product-image">
         <img src="{{ $product->image_url }}" alt="#">
         @if ($product->sale_percent)
@@ -9,8 +9,8 @@
             <span class="new-tag">New</span>
         @endif
         <div class="button">
-            <a href="{{ route('products.show', $product->slug) }}" class="btn"><i class="lni lni-cart"></i> Add to
-                Cart</a>
+            <a href="{{ route('products.show', $product->slug) }}" class="btn add-to-cart"
+                data-id="{{ $product->id }}"><i class="lni lni-cart"></i> {{ __('Add to Cart') }}</a>
         </div>
     </div>
     <div class="product-info">
@@ -24,7 +24,7 @@
             <li><i class="lni lni-star-filled"></i></li>
             <li><i class="lni lni-star-filled"></i></li>
             <li><i class="lni lni-star"></i></li>
-            <li><span>4.0 Review(s)</span></li>
+            <li><span>4.0 {{ __('Review(s)') }}</span></li>
         </ul>
         <div class="price">
             <span>{{ App\Helpers\Currency::format($product->price) }}</span>
@@ -34,4 +34,12 @@
         </div>
     </div>
 </div>
+@push('scripts')
+    <script>
+        const csrf_token = "{{ csrf_token() }}";
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {{-- <script src="{{ asset('build/assets/js/cart.js') }}"></script> --}}
+@endpush
+@vite('resources/js/cart.js')
 <!-- End Single Product -->

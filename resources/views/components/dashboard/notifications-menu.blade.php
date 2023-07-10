@@ -15,10 +15,10 @@
         <div class="dropdown-divider"></div>
         @foreach ($notifications as $notification)
             <a href="{{ route('dashboard.orders.show', $notification->data['order_id']) }}"
-                class="dropdown-item text-wrap text-bold">
+                class="dropdown-item text-wrap">
                 <i class="{{ $notification->data['icon'] }} mr-2"></i> {{ $notification->data['body'] }}
                 <span
-                    class="float-right text-muted text-sm">{{ $notification->created_at->longAbsoluteDiffForHumans() }}</span>
+                    class="float-right text-sm ">{{ $notification->created_at->longAbsoluteDiffForHumans() }}</span>
             </a>
             <div class="dropdown-divider"></div>
         @endforeach

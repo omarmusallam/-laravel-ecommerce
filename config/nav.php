@@ -11,9 +11,15 @@ return [
         'icon' => 'fas fa-tags nav-icon',
         'route' => 'dashboard.categories.index',
         'title' => 'Categories',
-        'badge' => 'New',
         'active' => 'dashboard.categories.*',
         'ability' => 'categories.view'
+    ],
+    [
+        'icon' => 'fas fa-box nav-icon',
+        'route' => 'dashboard.stores.index',
+        'title' => 'Stores',
+        'active' => 'dashboard.stores.*',
+        'ability' => 'stors.view',
     ],
     [
         'icon' => 'fas fa-box nav-icon',
@@ -33,6 +39,7 @@ return [
         'icon' => 'fas fa-shield nav-icon',
         'route' => 'dashboard.roles.index',
         'title' => 'Roles',
+        'badge' => 'New',
         'active' => 'dashboard.roles.*',
         'ability' => 'roles.view'
     ],
@@ -50,4 +57,5 @@ return [
         'active' => 'dashboard.admins.*',
         'ability' => 'admins.view',
     ],
+
 ];

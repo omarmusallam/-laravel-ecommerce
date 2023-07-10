@@ -9,9 +9,9 @@
 
 @section('content')
 
-    <div class="mb-5">
+    {{-- <div class="mb-5">
         <a href="{{ route('dashboard.users.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
-    </div>
+    </div> --}}
 
     <x-alert type="success" />
     <x-alert type="info" />

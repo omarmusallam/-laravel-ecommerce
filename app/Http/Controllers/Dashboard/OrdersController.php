@@ -30,7 +30,7 @@ class OrdersController extends Controller
         }
         $order = Order::findOrFail($id);
         $getID = DB::table('notifications')->where('data->order_id', $id)->pluck('id');
-        Notification::where('id', $getID)->update(['read_at' => now()]);
+        // Notification::where('id', $getID)->update(['read_at' => now()]);
         
         return view('dashboard.orders.show', compact('order'));
     }

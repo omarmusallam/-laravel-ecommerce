@@ -10,6 +10,7 @@
         "irazasyed/telegram-bot-sdk": "^3.11",
         "laravel/fortify": "^1.16",
         "laravel/framework": "^9.19",
+        "laravel/nexmo-notification-channel": "^3.2",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.7",
@@ -17,7 +18,8 @@
         "mcamara/laravel-localization": "^1.8",
         "pusher/pusher-php-server": "^7.2",
         "stripe/stripe-php": "9.1",
-        "symfony/intl": "^6.2"
+        "symfony/intl": "^6.2",
+        "vonage/client": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

@@ -28,21 +28,6 @@
         });
     });
 
-    $('.remove').on('click', function (e) {
-
-        let id = $(this).data('id');
-        $.ajax({
-            url: "/cart/" + id, //data-id
-            method: 'delete',
-            data: {
-                _token: csrf_token
-            },
-            success: response => {
-                $(`#${id}`).remove();
-            }
-        });
-    });
-
     $('.add-to-cart').on('click', function (e) {
 
         $.ajax({

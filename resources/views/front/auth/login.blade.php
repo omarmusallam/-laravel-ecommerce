@@ -1,4 +1,4 @@
-<x-front-layout title="Login">
+<x-front-layout title="{{ __('Login') }}">
 
     <!-- Start Account Login Area -->
     <div class="account-login section">

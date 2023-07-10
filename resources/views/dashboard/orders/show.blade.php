@@ -18,7 +18,6 @@
                 <th>street</th>
                 <th>city</th>
                 <th>postal_code</th>
-                <th>state</th>
                 <th>country</th>
             </tr>
         </thead>
@@ -31,7 +30,6 @@
                 <td>{{ $order->billingAddress->street_address }}</td>
                 <td>{{ $order->billingAddress->city }}</td>
                 <td>{{ $order->billingAddress->postal_code }}</td>
-                <td>{{ $order->billingAddress->state }}</td>
                 <td>{{ $order->billingAddress->country }}</td>
             </tr>
             <tr style="text-align: center">
@@ -42,7 +40,6 @@
                 <td>{{ $order->shippingAddress->street_address }}</td>
                 <td>{{ $order->shippingAddress->city }}</td>
                 <td>{{ $order->shippingAddress->postal_code }}</td>
-                <td>{{ $order->shippingAddress->state }}</td>
                 <td>{{ $order->shippingAddress->country }}</td>
             </tr>
         </tbody>

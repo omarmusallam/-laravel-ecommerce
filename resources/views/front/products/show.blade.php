@@ -10,8 +10,8 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li><a href="{{ route('products.index') }}">Shop</a></li>
+                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> {{ __('Home') }}</a></li>
+                            <li><a href="{{ route('products.index') }}">{{ __('Shop') }}</a></li>
                             <li>{{ $product->name }}</li>
                         </ul>
                     </div>
@@ -37,7 +37,7 @@
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
                             <h2 class="title">{{ $product->name }}</h2>
-                            <p class="category"><i class="lni lni-tag"></i> Brand:<a
+                            <p class="category"><i class="lni lni-tag"></i> {{ __('Brand') }}:<a
                                     href="javascript:void(0)">{{ $product->category->name }}</a></p>
                             <h3 class="price">{{ Currency::format($product->price) }}@if ($product->compare_price)
                                     <span>{{ Currency::format($product->compare_price) }}</span>
@@ -50,13 +50,12 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button mt-50">
-                                            <button class="btn" type="submit" style="width: 100%;">Add to
-                                                Cart</button>
+                                            <button class="btn" type="submit" style="width: 100%;">{{ __('Add to Cart') }}</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="form-group quantity">
-                                            <label for="color">Quantity</label>
+                                            <label for="color">{{ __('Quantity') }}</label>
                                             <select class="form-control" name="quantity">
                                                 <option>1</option>
                                                 <option>2</option>

@@ -62,7 +62,7 @@ class DashboardController extends Controller
     public function notify()
     {
         $user = Auth::user();
-        $notifications = $user->notifications()->paginate(3);
+        $notifications = $user->notifications()->paginate(15);
         $newCount = $user->unreadNotifications()->count();
 
         return view('dashboard.notification', compact('notifications', 'newCount'));

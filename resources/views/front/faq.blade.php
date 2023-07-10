@@ -1,4 +1,4 @@
-<x-front-layout title="faq">
+<x-front-layout title="{{ __('FAQ') }}">
     <!-- Start Breadcrumbs -->
     <x-slot:breadcrumb>
         <div class="breadcrumbs">
@@ -6,13 +6,13 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="breadcrumbs-content">
-                            <h1 class="page-title">FAQ</h1>
+                            <h1 class="page-title">{{ __('FAQ') }}</h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li>FAQ</li>
+                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> {{ __('Home') }}</a></li>
+                            <li>{{ __('FAQ') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -27,8 +27,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Haven't found the answer?<br> Ask us your question.</h2>
-                        <p>We normally respond within 2 business days. Most popular questions will appear on this page.
+                        <h2>{{ __('Have not found the answer?') }}<br> {{ __('Ask us your question.') }}</h2>
+                        <p>{{ __('We normally respond within 2 business days. Most popular questions will appear on this page.') }}
                         </p>
                     </div>
                 </div>

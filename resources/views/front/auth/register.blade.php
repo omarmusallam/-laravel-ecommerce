@@ -1,4 +1,4 @@
-<x-front-layout title="Register">
+<x-front-layout title="{{ __('Register') }}">
     <x-slot:breadcrumb>
         <!-- Start Breadcrumbs -->
         <div class="breadcrumbs">

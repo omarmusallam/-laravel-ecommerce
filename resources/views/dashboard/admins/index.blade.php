@@ -28,7 +28,9 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Store</th>
                 <th>Created At</th>
+                <th>Updated At</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
@@ -38,7 +40,9 @@
                     <td>{{ $admin->id }}</td>
                     <td><a href="{{ route('dashboard.admins.edit', $admin->id) }}">{{ $admin->name }}</a></td>
                     <td>{{ $admin->email }}</td>
+                    <td>{{ $admin->store->name }}</td>
                     <td>{{ $admin->created_at }}</td>
+                    <td>{{ $admin->updated_at }}</td>
                     <td>
                         @can('admins.update')
                             <a href="{{ route('dashboard.admins.edit', $admin->id) }}"
@@ -59,7 +63,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6">No admins defined.</td>
+                    <td colspan="7">No admins defined.</td>
                 </tr>
             @endforelse
         </tbody>

@@ -57,12 +57,12 @@ class ProductsController extends Controller
         $this->authorize('create', Product::class);
 
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:20'],
+            'name' => ['required', 'string', 'min:3', 'max:100'],
             'store_id' => ['required', 'int', 'exists:stores,id'],
             'category_id' => ['nullable', 'int', 'exists:categories,id'],
             'description' => ['nullable', 'string'],
-            'price' => ['required', 'int'],
-            'compare_price' => ['nullable', 'int'],
+            'price' => ['required', 'numeric'],
+            'compare_price' => ['nullable', 'numeric'],
             'image' => ['image', 'max:1048576', 'dimensions:min_width=100,min_height=100'],
             'status' => 'in:active,draft,archvied',
             // 'tags' => 'string',
@@ -118,12 +118,12 @@ class ProductsController extends Controller
         $this->authorize('update', $product);
 
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:20'],
+            'name' => ['required', 'string', 'min:3', 'max:100'],
             'store_id' => ['required', 'int', 'exists:stores,id'],
             'category_id' => ['nullable', 'int', 'exists:categories,id'],
             'description' => ['nullable', 'string'],
-            'price' => ['required', 'int'],
-            'compare_price' => ['nullable', 'int'],
+            'price' => ['required', 'numeric'],
+            'compare_price' => ['nullable', 'numeric'],
             'image' => ['image', 'max:1048576', 'dimensions:min_width=100,min_height=100'],
             'status' => 'in:active,draft,archvied',
             // 'tags' => 'string',

@@ -88,7 +88,7 @@ class PaymentsController extends Controller
 
             return redirect()->route('home', [
                 'status' => 'payement-succeeded'
-            ]);
+            ])->with('success', trans('Order created successfully'));
         }
 
         return redirect()->route('orders.payments.create', [

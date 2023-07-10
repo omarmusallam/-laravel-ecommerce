@@ -45,7 +45,7 @@ class UserProfileController extends Controller
         $user->userprofile->fill($request->all())->save();
 
         return redirect()->route('user-profile.edit')
-            ->with('success', 'Profile updated!');
+            ->with('success', trans('Profile updated!'));
     }
 
     public function create()

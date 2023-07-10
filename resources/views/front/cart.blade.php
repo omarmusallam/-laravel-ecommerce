@@ -1,4 +1,4 @@
-<x-front-layout title="Cart">
+<x-front-layout title="{{ __('Cart') }}">
 
     <x-slot:breadcrumb>
         <div class="breadcrumbs">
@@ -6,14 +6,14 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="breadcrumbs-content">
-                            <h1 class="page-title">Cart</h1>
+                            <h1 class="page-title">{{ __('Cart') }}</h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li><a href="{{ route('list-products.index') }}">Shop</a></li>
-                            <li>Cart</li>
+                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> {{ __('Home') }}</a></li>
+                            <li><a href="{{ route('list-products.index') }}">{{ __('Shop') }}</a></li>
+                            <li>{{ __('Cart') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -33,19 +33,19 @@
 
                         </div>
                         <div class="col-lg-4 col-md-3 col-12">
-                            <p>Product Name</p>
+                            <p>{{ __('Product Name') }}</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>Quantity</p>
+                            <p>{{ __('Quantity') }}</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>Price</p>
+                            <p>{{ __('Price') }}</p>
                         </div>
                         <div class="col-lg-2 col-md-2 col-12">
-                            <p>Subtotal</p>
+                            <p>{{ __('Subtotal') }}</p>
                         </div>
                         <div class="col-lg-1 col-md-2 col-12">
-                            <p>Remove</p>
+                            <p>{{ __('Remove') }}</p>
                         </div>
                     </div>
                 </div>
@@ -62,10 +62,10 @@
                                 <h5 class="product-name"><a href="{{ route('products.show', $item->product->slug) }}">
                                         {{ $item->product->name }}</a></h5>
                                 <p class="product-des">
-                                    <span><em>Brand:</em> {{ $item->product->category->name }}</span>
+                                    <span><em>{{ __('Brand:') }}</em> {{ $item->product->category->name }}</span>
                                     @if ($item->product->sale_percent)
                                         <span
-                                            class=""><em>Discount: </em>-{{ $item->product->sale_percent }}%</span>
+                                            class=""><em>{{ __('Discount:') }} </em>-{{ $item->product->sale_percent }}%</span>
                                     @endif
                                 </p>
                             </div>
@@ -100,9 +100,9 @@
                                 <div class="left">
                                     <div class="coupon">
                                         <form action="#" target="_blank">
-                                            <input name="Coupon" placeholder="Enter Your Coupon">
+                                            <input name="Coupon" placeholder="{{ __('Enter Your Coupon') }}">
                                             <div class="button">
-                                                <button type="button" class="btn">Apply Coupon</button>
+                                                <button type="button" class="btn">{{ __('Apply Coupon') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -111,16 +111,15 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>Cart Subtotal<span>{{ Currency::format($cart->total()) }}</span></li>
-                                        <li>Shipping<span>Free</span></li>
-                                        <li>Tax<span>$00.00</span></li>
-                                        <li class="last">You Pay<span>{{ Currency::format($cart->total()) }}</span>
+                                        <li>{{ __('Cart Subtotal') }}<span>{{ Currency::format($cart->total()) }}</span></li>
+                                        <li>{{ __('Shipping') }}<span>{{ __('Free') }}</span></li>
+                                        <li>{{ __('Tax') }}<span>{{ Currency::format(00.00) }}</span></li>
+                                        <li class="last">{{ __('You Pay') }}<span>{{ Currency::format($cart->total()) }}</span>
                                         </li>
                                     </ul>
                                     <div class="button">
-                                        <a href="{{ route('checkout') }}" class="btn">Checkout</a>
-                                        <a href="{{ route('list-products.index') }}" class="btn btn-alt">Continue
-                                            shopping</a>
+                                        <a href="{{ route('checkout') }}" class="btn">{{ __('Checkout') }}</a>
+                                        <a href="{{ route('list-products.index') }}" class="btn btn-alt">{{ __('Continue shopping') }}</a>
                                     </div>
                                 </div>
                             </div>

@@ -25,7 +25,8 @@ class AdminsController extends Controller
     public function index()
     {
         $request = request();
-        $admins = Admin::filter($request->query())
+        $admins = Admin::with(['store'])
+            ->filter($request->query())
             ->paginate();
         return view('dashboard.admins.index', compact('admins'));
     }
@@ -56,6 +57,7 @@ class AdminsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
+            'store_id' => ['nullable', 'int', 'exists:stores,id'],
             'username' => ['required', 'string', 'max:32', 'unique:admins,username'],
             'phone_number' => 'required|min:9|numeric',
             'roles' => 'array',
@@ -64,6 +66,7 @@ class AdminsController extends Controller
         $admin = Admin::create([
             'name' => $request['name'],
             'email' => $request['email'],
+            'store_id' => $request['store_id'],
             'username' => $request['username'],
             'phone_number' => $request['phone_number'],
         ]);
@@ -74,18 +77,6 @@ class AdminsController extends Controller
             ->route('dashboard.admins.index')
             ->with('success', 'Admin created successfully');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *

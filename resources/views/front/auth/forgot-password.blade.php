@@ -1,4 +1,4 @@
-<x-front-layout title="Login">
+<x-front-layout title="{{ __('Forgot Password') }}">
 
     <!-- Start Account Login Area -->
     <div class="account-login section">
@@ -9,9 +9,8 @@
                         @csrf
                         <div class="card-body">
                             <div class="title">
-                                <h3>Forgot Password</h3>
-                                <p>Forgot your password? No problem. Just let us know your email address and we will
-                                    email you a password reset link that will allow you to choose a new one.</p>
+                                <h3>{{ __('Forgot Password') }}</h3>
+                                <p>{{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}</p>
                             </div>
                             <x-auth-session-status class="mb-4" style="color: green" :status="session('status')" />
                             
@@ -21,11 +20,11 @@
                                 </div>
                             @endif
                             <div class="form-group input-group">
-                                <label for="email">Email</label>
+                                <label for="email">{{ __('Email') }}</label>
                                 <input class="form-control" type="email" name="email" id="email" required>
                             </div>
                             <div class="button">
-                                <button class="btn" type="submit">Email Password Reset Link</button>
+                                <button class="btn" type="submit">{{ __('Email Password Reset Link') }}</button>
                             </div>
                         </div>
                     </form>

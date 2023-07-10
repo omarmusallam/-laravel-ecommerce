@@ -6,9 +6,9 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ImportProductsController;
 use App\Http\Controllers\Dashboard\OrdersController;
 use App\Http\Controllers\Dashboard\ProductsController;
-use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\ProfileCotroller;
 use App\Http\Controllers\Dashboard\RolesController;
+use App\Http\Controllers\Dashboard\StoreController;
 use App\Http\Controllers\Dashboard\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +16,6 @@ Route::group([
     'middleware' => ['auth:admin'],
     'as' => 'dashboard.',
     'prefix' => 'admin/dashboard',
-    //'namespace' => 'App\Http\Controllers\Dashboard',
 ], function () {
 
     Route::get('profile', [ProfileCotroller::class, 'edit'])->name('profile.edit');
@@ -41,12 +40,17 @@ Route::group([
         ->name('products.import');
     Route::post('products/import', [ImportProductsController::class, 'store']);
 
+    Route::resource('users', UsersController::class)->except([
+        'create',
+        'store'
+    ]);
+
     Route::resources([
         'products' => ProductsController::class,
         'categories' => CategoriesController::class,
+        'stores' => StoreController::class,
         'orders' => OrdersController::class,
         'roles' => RolesController::class,
-        'users' => UsersController::class,
         'admins' => AdminsController::class,
     ]);
 });

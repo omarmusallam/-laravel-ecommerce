@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
 use App\Http\Controllers\Front\CartController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\Front\UserProfileController;
+use App\Http\Controllers\SendSms;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StripeWebhooksController;
 use App\Http\Livewire\ShowProducts;
@@ -52,7 +54,7 @@ Route::group([
     Route::resource('cart', CartController::class);
 
     Route::get('checkout', [CheckoutController::class, 'create'])
-        ->name('checkout');
+        ->name('checkout')->middleware('auth');
 
     Route::post('checkout', [CheckoutController::class, 'store']);
 
@@ -69,9 +71,8 @@ Route::group([
         return view('front.about');
     })->name('about-us');
 
-    Route::get('contact-us', function () {
-        return view('front.contact');
-    })->name('contact-us');
+    Route::get('contact-us', [ContactController::class, 'index'])->name('contact-us');
+    Route::post('contact-us', [ContactController::class, 'sendEmail'])->name('contact.send');
 
     Route::get('mail-success', function () {
         return view('front.mail-success');
@@ -84,6 +85,10 @@ Route::group([
     Route::get('faq', function () {
         return view('front.faq');
     })->name('faq');
+
+    Route::get('mail-success', function () {
+        return view('front.mail');
+    })->name('mail-success');
 
     Route::resource('list-products', ListProductsController::class);
 });
@@ -112,3 +117,5 @@ Route::get('/orders/{order}', [OrdersController::class, 'show'])
 // require __DIR__ . '/auth.php';
 
 require __DIR__ . '/dashboard.php';
+
+Route::get('send-sms',[SendSms::class, 'send']);

@@ -29,7 +29,7 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id')
             ->withDefault([
-                'name' => 'annn'
+                'name' => '-'
             ]);
     }
 
@@ -59,7 +59,7 @@ class Category extends Model
                 'required',
                 'string',
                 'min:3',
-                'max:20',
+                'max:30',
                 // 'unique:categories,name,$id',
                 Rule::unique('categories', 'name')->ignore($id),
                 // function($attribute, $value, $fails){

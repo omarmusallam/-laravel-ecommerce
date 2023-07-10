@@ -21,6 +21,7 @@ class Admin extends User
         'phone_number',
         'super_admin',
         'status',
+        'store_id'
     ];
     public function scopeFilter(Builder $builder, $filters)
     {
@@ -31,7 +32,15 @@ class Admin extends User
             $builder->where('admins.email', 'LIKE', "%{$filters['email']}%");
         }
     }
-    public function profile(){
+    public function store()
+    {
+        return $this->belongsTo(Store::class)->withDefault([
+            'name' => '-'
+        ]);
+    }
+    public function profile()
+    {
         return $this->hasOne(Profile::class, 'admin_id', 'id')->withDefault();
     }
+
 }

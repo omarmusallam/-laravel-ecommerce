@@ -15,6 +15,15 @@
     <x-form.input label="Email" type="email" name="email" :value="$admin->email" />
 </div>
 <div class="form-group">
+    <label for="">Store</label>
+    <select name="store_id" class="form-control form-select">
+        <option value="">Select Store</option>
+        @foreach (App\Models\Store::all() as $store)
+            <option value="{{ $store->id }}" @selected(old('store_id', $admin->store_id) == $store->id)>{{ $store->name }}</option>
+        @endforeach
+    </select>
+</div>
+<div class="form-group">
     <x-form.input label="User Name" name="username" :value="$admin->username" />
 </div>
 <div class="form-group">

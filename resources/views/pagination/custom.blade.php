@@ -6,9 +6,9 @@
 
                 <ul class="pagination-list">
                     @if ($paginator->onFirstPage())
-                        <li class="disabled"><span>← Previous</span></li>
+                        <li class="disabled"><span>{{ __('Previous') }}</span></li>
                     @else
-                        <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">← Previous</a></li>
+                        <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">{{ __('Previous') }}</a></li>
                     @endif
                     @foreach ($elements as $element)
                         @if (is_string($element))
@@ -25,13 +25,13 @@
                         @endif
                     @endforeach
                     @if ($paginator->hasMorePages())
-                        <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">Next →</a></li>
+                        <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">{{ __('Next') }}</a></li>
                     @else
-                        <li class="disabled"><span>Next →</span></li>
+                        <li class="disabled"><span>{{ __('Next') }}</span></li>
                     @endif
                 </ul>
             </div>
-            Showing: {{ $paginator->firstItem() }} - {{ $paginator->lastItem() }} of {{ $paginator->total() }} items
+            {{ __('Showing') }}: {{ $paginator->firstItem() }} - {{ $paginator->lastItem() }} {{ __('of') }} {{ $paginator->total() }} {{ __('items') }}
         </div>
     </div>
 @endif

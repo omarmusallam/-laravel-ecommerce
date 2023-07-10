@@ -1,4 +1,4 @@
-<x-front-layout title="List Products">
+<x-front-layout title="{{ __('Products') }}">
 
     <!-- Start Breadcrumbs -->
     <x-slot:breadcrumb>
@@ -7,13 +7,13 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="breadcrumbs-content">
-                            <h1 class="page-title"><a href="{{ route('list-products.index') }}">Shop List</a></h1>
+                            <h1 class="page-title"><a href="{{ route('list-products.index') }}">{{ __('Products') }}</a></h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <ul class="breadcrumb-nav">
-                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li>Shop</li>
+                            <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> {{ __('Home') }}</a></li>
+                            <li>{{ __('Shop') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -30,16 +30,16 @@
                     <div class="product-sidebar">
                         <!-- Start Single Widget -->
                         <div class="single-widget search">
-                            <h3>Search Product</h3>
+                            <h3>{{ __('Search Product') }}</h3>
                             <form action="{{ URL::current() }}" method="get">
-                                <x-form.input name="slug" placeholder="product name..." :value="request('slug')" />
+                                <x-form.input name="slug" placeholder="{{ __('product name...') }}" :value="request('slug')" />
                                 <button type="submit"><i class="lni lni-search-alt"></i></button>
                             </form>
                         </div>
                         <!-- End Single Widget -->
                         <!-- Start Single Widget -->
                         <div class="single-widget">
-                            <h3>All Categories</h3>
+                            <h3>{{ __('All Categories') }}</h3>
                             <ul class="list">
                                 @if ($categories->count())
                                     @foreach ($categories as $category)
@@ -61,16 +61,16 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-7 col-md-8 col-12">
                                     <div class="product-sorting">
-                                        <label for="sorting">Sort by:</label>
+                                        <label for="sorting">{{ __('Sort by:') }}</label>
                                         <select class="form-control" id="sorting">
-                                            <option>Recently Added</option>
-                                            <option>Low - High Price</option>
-                                            <option>High - Low Price</option>
-                                            <option>A - Z Product</option>
-                                            <option>Z - A Product</option>
+                                            <option>{{ __('Recently Added') }}</option>
+                                            <option><a href="#">Low - High Price</a></option>
+                                            <option><a href="">High - Low Price</a></option>
+                                            <option><a href="">A - Z Product</a></option>
+                                            <option><a href="">Z - A Product</a></option>
                                         </select>
-                                        <h3 class="total-show-product">Showing: {{ $products->firstItem() }} -
-                                            {{ $products->lastItem() }} of {{ $products->total() }} items</h3>
+                                        <h3 class="total-show-product">{{ __('Showing') }}: {{ $products->firstItem() }} -
+                                            {{ $products->lastItem() }} {{ __('of') }} {{ $products->total() }} {{ __('items') }}</h3>
 
                                     </div>
                                 </div>
@@ -104,8 +104,7 @@
                                                     <img src="{{ $product->image_url }}" alt="#">
                                                     <div class="button">
                                                         <a href="{{ route('products.show', $product->slug) }}"
-                                                            class="btn"><i class="lni lni-cart"></i> Add to
-                                                            Cart</a>
+                                                            class="btn"><i class="lni lni-cart"></i> {{ __('Add to Cart') }}</a>
                                                     </div>
                                                 </div>
                                                 <div class="product-info">
@@ -120,7 +119,7 @@
                                                         <li><i class="lni lni-star-filled"></i></li>
                                                         <li><i class="lni lni-star-filled"></i></li>
                                                         <li><i class="lni lni-star"></i></li>
-                                                        <li><span>4.0 Review(s)</span></li>
+                                                        <li><span>4.0 {{ __('Review(s)') }}</span></li>
                                                     </ul>
                                                     <div class="price">
                                                         <span>{{ App\Helpers\Currency::format($product->price) }}</span>
@@ -135,63 +134,10 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <center class="mt-5">
+                                <div class="mt-5" style="">
                                     {{ $products->withQueryString()->links('pagination.custom') }}
-                                </center>
-                            </div>
-                            {{-- <div class="tab-pane show active fade" id="nav-list" role="tabpanel"
-                                aria-labelledby="nav-list-tab">
-                                <div class="row">
-                                    @foreach ($products as $product)
-                                        <div class="col-lg-12 col-md-12 col-12">
-                                            <!-- Start Single Product -->
-                                            <div class="single-product">
-                                                <div class="row align-items-center">
-                                                    <div class="col-lg-4 col-md-4 col-12">
-                                                        <div class="product-image">
-                                                            <img src="{{ $product->image_url }}" alt="#">
-                                                            <div class="button">
-                                                                <a href="{{ route('products.show', $product->slug) }}"
-                                                                    class="btn"><i class="lni lni-cart"></i> Add to
-                                                                    Cart</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-8 col-md-8 col-12">
-                                                        <div class="product-info">
-                                                            <span
-                                                                class="category">{{ $product->category->name }}</span>
-                                                            <h4 class="title">
-                                                                <a
-                                                                    href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
-                                                            </h4>
-                                                            <ul class="review">
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star-filled"></i></li>
-                                                                <li><i class="lni lni-star"></i></li>
-                                                                <li><span>4.0 Review(s)</span></li>
-                                                            </ul>
-                                                            <div class="price">
-                                                                <span>{{ App\Helpers\Currency::format($product->price) }}</span>
-                                                                @if ($product->compare_price)
-                                                                    <span
-                                                                        class="discount-price">{{ App\Helpers\Currency::format($product->compare_price) }}</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Single Product -->
-                                        </div>
-                                    @endforeach
                                 </div>
-                                <center class="mt-5">
-                                    {{ $products->withQueryString()->links('pagination.custom') }}
-                                </center>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>

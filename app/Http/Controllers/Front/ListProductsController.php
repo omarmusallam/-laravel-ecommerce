@@ -18,7 +18,7 @@ class ListProductsController extends Controller
     public function index()
     {
         $request = request();
-        $products = Product::with('category')->active()
+        $products = Product::inRandomOrder()->with('category')->active()
             ->latest()
             ->filter2($request->query())
             ->paginate(15);
