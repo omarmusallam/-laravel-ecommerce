@@ -40,15 +40,15 @@ class Product extends Model
         });
     }
 
-    public function scopeFilter2(Builder $builder, $filters)
-    {
-        if ($filters['name'] ?? false) {
-            $builder->where('products.name', 'LIKE', "%{$filters['name']}%");
-        }
-        if ($filters['status'] ?? false) {
-            $builder->where('products.status', '=', $filters['status']);
-        }
-    }
+    // public function scopeFilter2(Builder $builder, $filters)
+    // {
+    //     if ($filters['name'] ?? false) {
+    //         $builder->where('products.name', 'LIKE', "%{$filters['name']}%");
+    //     }
+    //     if ($filters['category_id'] ?? false) {
+    //         $builder->where('products.category_id', '=', $filters['category_id']);
+    //     }
+    // }
 
     public function category()
     {

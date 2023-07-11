@@ -8,9 +8,18 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrdersController extends Controller
 {
+    public function print(Order $order)
+    {
+        $pdf = Pdf::loadView('dashboard.orders.invoice', compact('order'));
+        return $pdf->download('invoice.pdf');
+        // return $pdf->stream();
+        return view('dashboard.orders.invoice', compact('order'));
+    }
+
     public function index()
     {
         if (!Gate::allows('orders.view')) {
@@ -31,7 +40,7 @@ class OrdersController extends Controller
         $order = Order::findOrFail($id);
         $getID = DB::table('notifications')->where('data->order_id', $id)->pluck('id');
         // Notification::where('id', $getID)->update(['read_at' => now()]);
-        
+
         return view('dashboard.orders.show', compact('order'));
     }
 

@@ -28,11 +28,11 @@
                 <th>Store</th>
                 <th>User</th>
                 <th>Payment</th>
-                <th>Currency</th>
+                {{-- <th>Currency</th> --}}
                 <th>Total-Price</th>
                 <th>Payment-Status</th>
                 <th>Created At</th>
-                <th colspan="2">#</th>
+                <th colspan="3">Processing</th>
             </tr>
         </thead>
         <tbody>
@@ -44,10 +44,14 @@
                         <td>{{ $order->store->name }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td>{{ $order->payment->method }}</td>
-                        <td>{{ $order->payment->currency }}</td>
+                        {{-- <td>{{ $order->payment->currency }}</td> --}}
                         <td>{{ $order->payment->amount }}</td>
                         <td>{{ $order->payment->status }}</td>
                         <td>{{ $order->created_at }}</td>
+                        <td>
+                            <a href="{{ route('dashboard.orders.print', $order->id) }}"
+                                class="btn btn-sm btn-outline-info">Print</a>
+                        </td>
                         <td>
                             <a href="{{ route('dashboard.orders.show', $order->id) }}"
                                 class="btn btn-sm btn-outline-success">Show</a>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\ProductsExport;
 use App\Http\Controllers\Controller;
+use App\Imports\ProductsImport;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
@@ -11,25 +13,35 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 
 class ProductsController extends Controller
 {
+
+    public function query(Request $request)
+    {
+        return Product::with(['category', 'store'])
+            ->orderby('products.created_at', 'desc')
+            ->when($request->name, function ($query, $value) {
+                $query->where('name', 'LIKE', "%{$value}%");
+            })
+            ->when($request->category_id, function ($query, $value) {
+                $query->where('category_id', '=', $value);
+            });
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('view-any', Product::class);
         $request = request();
-        $products = Product::with(['category', 'store'])
-            ->filter2($request->query())
-            ->orderby('products.created_at', 'desc')
-            ->paginate();
-
-        return view('dashboard.products.index', compact('products'));
+        $products = $this->query($request)->paginate();
+        $categories = Category::all();
+        return view('dashboard.products.index', compact('products', 'categories'));
     }
 
     /**
@@ -146,7 +158,7 @@ class ProductsController extends Controller
         }
 
         // $product->update($request->except('tags'));
-        
+
         // $tags = json_decode($request->post('tags'));
         // $tag_ids = [];
 
@@ -166,7 +178,7 @@ class ProductsController extends Controller
 
         // $product->tags()->sync($tag_ids);
 
-        
+
         return redirect()->route('dashboard.products.index')
             ->with('success', 'Product updated');
     }
@@ -185,6 +197,31 @@ class ProductsController extends Controller
 
         return redirect()->route('dashboard.products.index')
             ->with('success', 'Deleted Done!');
+    }
+
+    public function export(Request $request)
+    {
+        $query = $this->query($request);
+
+        $export = new ProductsExport();
+        $export->setQuery($query);
+        return Excel::download($export, 'products.xlsx');
+    }
+
+    public function importView()
+    {
+        return view('dashboard.products.importView');
+    }
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'mimes:xls,xlsx,csv'],
+        ]);
+
+        Excel::import(new ProductsImport, $request->file('file')->path());
+
+        return redirect()->route('dashboard.products.index')
+            ->with('success', 'Product Imported successfully!');
     }
 
     protected function uploadImage(Request $request)

@@ -9,8 +9,8 @@
         @if (Auth::user()->can('products.create'))
             <a href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
         @endif
-        {{-- <a href="{{ route('dashboard.products.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a> --}}
-
+        <a href="{{ route('dashboard.products.export', request()->query()) }}" class="btn btn-sm btn-outline-dark">Export</a>
+        <a href="{{ route('dashboard.products.import.view') }}" class="btn btn-sm btn-outline-success">Import</a>
     </div>
 
     <x-alert type="success" />
@@ -18,11 +18,17 @@
 
     <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
         <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
-        <select name="status" class="form-control mx-2">
+        {{-- <select name="status" class="form-control mx-2">
             <option value="">All</option>
             <option value="active" @selected(request('status') == 'active')>Active</option>
             <option value="draft" @selected(request('status') == 'draft')>Draft</option>
             <option value="archvied" @selected(request('status') == 'archvied')>Archvied</option>
+        </select> --}}
+        <select name="category_id" class="form-control mx-2">
+            <option value="">All Categories</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
         </select>
         <button class="btn btn-dark mx-2">Filter</button>
     </form>
