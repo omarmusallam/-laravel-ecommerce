@@ -52,11 +52,11 @@
                                                     <label>{{ __('User Name') }}</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input name="addr[billing][first_name]"
+                                                            <x-form.input required name="addr[billing][first_name]"
                                                                 placeholder="{{ __('First Name') }}" />
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input name="addr[billing][last_name]"
+                                                            <x-form.input required name="addr[billing][last_name]"
                                                                 placeholder="{{ __('Last Name') }}" />
                                                         </div>
                                                     </div>
@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>{{ __('Email Address') }}</label>
+                                                    <label>{{ __('Email Address (optional)') }}</label>
                                                     <div class="form-input form">
                                                         <x-form.input name="addr[billing][email]"
                                                             placeholder="{{ __('Email Address') }}" />
@@ -75,7 +75,7 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Phone Number') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[billing][phone_number]"
+                                                        <x-form.input required name="addr[billing][phone_number]"
                                                             placeholder="{{ __('Phone Number') }}" />
                                                     </div>
                                                 </div>
@@ -84,7 +84,7 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Mailing Address') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[billing][street_address]"
+                                                        <x-form.input required name="addr[billing][street_address]"
                                                             placeholder="{{ __('Mailing Address') }}" />
                                                     </div>
                                                 </div>
@@ -93,14 +93,14 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('City') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[billing][city]"
+                                                        <x-form.input required name="addr[billing][city]"
                                                             placeholder="{{ __('City') }}" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>{{ __('Post Code') }}</label>
+                                                    <label>{{ __('Post Code (optional)') }}</label>
                                                     <div class="form-input form">
                                                         <x-form.input name="addr[billing][postal_code]"
                                                             placeholder="{{ __('Post Code') }}" />
@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>{{ __('Region/State') }}</label>
+                                                    <label>{{ __('Region/State (optional)') }}</label>
                                                     <div class="select-items">
                                                         <x-form.input name="addr[billing][state]"
                                                             placeholder="{{ __('State') }}" />
@@ -120,7 +120,7 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Country') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.select name="addr[billing][country]"
+                                                        <x-form.select required name="addr[billing][country]"
                                                             :options="$countries" />
                                                     </div>
                                                 </div>
@@ -154,11 +154,11 @@
                                                     <label>{{ __('User Name') }}</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input name="addr[shipping][first_name]"
+                                                            <x-form.input required name="addr[shipping][first_name]"
                                                                 placeholder="{{ __('First Name') }}" />
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input name="addr[shipping][last_name]"
+                                                            <x-form.input required name="addr[shipping][last_name]"
                                                                 placeholder="{{ __('Last Name') }}" />
                                                         </div>
                                                     </div>
@@ -166,7 +166,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>{{ __('Email Address') }}</label>
+                                                    <label>{{ __('Email Address (optional)') }}</label>
                                                     <div class="form-input form">
                                                         <x-form.input name="addr[shipping][email]"
                                                             placeholder="{{ __('Email Address') }}" />
@@ -177,7 +177,7 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Phone Number') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[shipping][phone_number]"
+                                                        <x-form.input required name="addr[shipping][phone_number]"
                                                             placeholder="{{ __('Phone Number') }}" />
                                                     </div>
                                                 </div>
@@ -186,7 +186,7 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Mailing Address') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[shipping][street_address]"
+                                                        <x-form.input required name="addr[shipping][street_address]"
                                                             placeholder="{{ __('Mailing Address') }}" />
                                                     </div>
                                                 </div>
@@ -195,14 +195,14 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('City') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[shipping][city]"
+                                                        <x-form.input required name="addr[shipping][city]"
                                                             placeholder="{{ __('City') }}" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>{{ __('Post Code') }}</label>
+                                                    <label>{{ __('Post Code (optional)') }}</label>
                                                     <div class="form-input form">
                                                         <x-form.input name="addr[shipping][postal_code]"
                                                             placeholder="{{ __('Post Code') }}" />
@@ -211,7 +211,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="single-form form-default">
-                                                    <label>{{ __('Region/State') }}</label>
+                                                    <label>{{ __('Region/State (optional)') }}</label>
                                                     <div class="select-items">
                                                         <x-form.input name="addr[shipping][state]"
                                                             placeholder="{{ __('State') }}" />
@@ -222,7 +222,7 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Country') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.select name="addr[shipping][country]"
+                                                        <x-form.select required name="addr[shipping][country]"
                                                             :options="$countries" />
                                                     </div>
                                                 </div>
@@ -280,7 +280,7 @@
                             </form>
                         </div>
                         <div class="checkout-sidebar-price-table mt-30">
-                            <h5 class="title">{{ __('You Pay') }}</h5>
+                            <p class="title">{{ __('You Pay') }}</p>
 
                             <div class="sub-total-price">
                                 <div class="total-price">

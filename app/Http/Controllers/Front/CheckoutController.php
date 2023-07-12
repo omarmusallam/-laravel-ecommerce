@@ -30,16 +30,16 @@ class CheckoutController extends Controller
     public function store(Request $request, CartRepository $cart)
     {
         $request->validate([
-            'addr.billing.first_name' => ['required', 'string', 'max:255'],
-            'addr.billing.last_name' => ['required', 'string', 'max:255'],
-            'addr.billing.email' => ['required', 'string', 'max:255'],
-            'addr.billing.phone_number' => ['required', 'string', 'max:255'],
-            'addr.billing.city' => ['required', 'string', 'max:255'],
-            'addr.shipping.first_name' => ['required', 'string', 'max:255'],
-            'addr.shipping.last_name' => ['required', 'string', 'max:255'],
-            'addr.shipping.email' => ['required', 'string', 'max:255'],
-            'addr.shipping.phone_number' => ['required', 'string', 'max:255'],
-            'addr.shipping.city' => ['required', 'string', 'max:255'],
+            'addr.billing.first_name' => ['required', 'string', 'max:20'],
+            'addr.billing.last_name' => ['required', 'string', 'max:20'],
+            'addr.billing.email' => ['nullable', 'email', 'max:50'],
+            'addr.billing.phone_number' => ['required', 'min:9', 'numeric'],
+            'addr.billing.city' => ['required', 'string', 'max:20'],
+            'addr.shipping.first_name' => ['required', 'string', 'max:20'],
+            'addr.shipping.last_name' => ['required', 'string', 'max:20'],
+            'addr.shipping.email' => ['nullable', 'email', 'max:50'],
+            'addr.shipping.phone_number' => ['required', 'min:9', 'numeric'],
+            'addr.shipping.city' => ['required', 'string', 'max:20'],
         ]);
 
         $items = $cart->get()->groupBy('product.store_id')->all();
@@ -51,7 +51,7 @@ class CheckoutController extends Controller
                 $order = Order::create([
                     'store_id' => $store_id,
                     'user_id' => Auth::id(),
-                    'payment_method' => 'cod',
+                    'payment_method' => 'stripe',
                 ]);
 
                 foreach ($cart_items as $item) {

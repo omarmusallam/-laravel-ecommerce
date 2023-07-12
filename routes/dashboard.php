@@ -21,6 +21,8 @@ Route::group([
     // Dashboard Home Page
     Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard');
+    Route::get('/charts/orders', [DashboardController::class, 'orderChart'])
+        ->name('charts.orders');
 
     Route::get('profile', [ProfileCotroller::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileCotroller::class, 'update'])->name('profile.update');
