@@ -71,7 +71,7 @@
     </section>
     <!-- End Hero Area -->
 
-    <!-- Start Recently Added Area -->
+    <!-- Start Recommended for you -->
     <section class="trending-product section">
         <div class="container">
             <div class="row">
@@ -92,7 +92,7 @@
             </div>
         </div>
     </section>
-    <!-- End Recently Added Area -->
+    <!-- End Recommended Added Area -->
 
     <!-- Start Banner Area -->
     <section class="banner section">
@@ -128,7 +128,7 @@
     </section>
     <!-- End Banner Area -->
 
-    <!-- Start Recommended for you -->
+    <!-- Start Recently Added Area -->
     <section class="special-offer section">
         <div class="container">
             <div class="row">
@@ -204,7 +204,7 @@
             </div>
         </div>
     </section>
-    <!-- End Recommended for you -->
+    <!-- End Recently for you -->
 
     <!-- Start Shipping Info -->
     <section class="shipping-info">

@@ -185,12 +185,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
-
             /*
              * Package Service Providers...
              */
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
             /*
              * Application Service Providers...
              */
@@ -218,6 +217,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Currency' => App\Helpers\Currency::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
 ];

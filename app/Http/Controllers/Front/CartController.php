@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Facades\Cart;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Repositories\Cart\CartModelRepository;
@@ -52,6 +53,7 @@ class CartController extends Controller
         if ($request->expectsJson()) {
             return response()->json([
                 'message' => 'Item added to cart!',
+                'cart' => Cart::get(),
             ]);
         }
 
@@ -72,6 +74,18 @@ class CartController extends Controller
         ]);
 
         $this->cart->update($id, $request->post('quantity'));
+
+        $cartTotal = $this->cart->get()->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+
+        $itemTotal = $this->cart->get()->find($id)->quantity * $this->cart->get()->find($id)->product->price;
+
+        return response()->json([
+            'message' => trans('Quantity updated!'),
+            'cartTotal' => $cartTotal,
+            'itemTotal' => $itemTotal,
+        ]);
     }
 
     /**
@@ -82,10 +96,16 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        // $repository = new CartModelRepository();
         $this->cart->delete($id);
-        return [
+
+        $cartTotal = $this->cart->get()->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+
+        return response()->json([
             'message' => trans('Item deleted!'),
-        ];
+            'cartTotal' => $cartTotal,
+        ]);
     }
+
 }

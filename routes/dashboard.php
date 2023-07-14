@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\AdminsController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\ImagesController;
 use App\Http\Controllers\Dashboard\ImportProductsController;
 use App\Http\Controllers\Dashboard\OrdersController;
 use App\Http\Controllers\Dashboard\PrintPDF;
@@ -70,6 +71,10 @@ Route::group([
         'create',
         'store'
     ]);
+
+    Route::get('images/{disk}/{width}x{height}/{image}', [ImagesController::class, 'index'])
+        ->name('image')
+        ->where('image', '.*');
 });
 
 // Route::middleware('auth')->as('dashboard.')->prefix('dashboard')->group(function() {

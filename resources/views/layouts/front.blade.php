@@ -10,7 +10,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}" />
 
     <!-- ========================= CSS here ========================= -->
-    
+
     @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.rtl.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.3.0.rtl.css') }}" />
@@ -102,7 +102,7 @@
                             <ul class="useful-links">
                                 <li><a href="{{ route('home') }}">{{ trans('app.home') }}</a></li>
                                 <li><a href="{{ route('about-us') }}">@lang('app.about')</a></li>
-                                <li><a href="{{ route('contact-us') }}">{{ __('app.contact') }}</a></li>
+                                <li><a href="{{ route('contact-us') }}">{{ __('Contact Us') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -163,7 +163,8 @@
                                 <!-- navbar search start -->
                                 <div class="navbar-search search-style-5">
                                     <div class="search-input">
-                                        <x-form.input name="slug" placeholder="{{ __('Search') }}" :value="request('slug')" />
+                                        <x-form.input name="slug" placeholder="{{ __('Search') }}"
+                                            :value="request('slug')" />
                                     </div>
                                     <div class="search-btn">
                                         <button><i class="lni lni-search-alt"></i></button>
@@ -344,7 +345,8 @@
                                 </h4>
                                 <div class="newsletter-form-head">
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="{{ __('Email address here') }}..." type="email">
+                                        <input name="EMAIL" placeholder="{{ __('Email address here') }}..."
+                                            type="email">
                                         <div class="button">
                                             <button type="button" class="btn">{{ __('Subscribe') }}<span
                                                     class="dir-part"></span></button>
@@ -450,8 +452,8 @@
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="copyright">
-                                <p>{{ __('Designed and Developed by') }} :<a href="{{ route('home') }}" rel="nofollow"
-                                        target="_blank">{{ config('app.name') }}</a></p>
+                                <p>{{ __('Designed and Developed by') }} :<a href="{{ route('home') }}"
+                                        rel="nofollow" target="_blank">{{ config('app.name') }}</a></p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
@@ -483,7 +485,7 @@
     <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
     @stack('scripts')
 
 </body>

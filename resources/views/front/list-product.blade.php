@@ -7,7 +7,8 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="breadcrumbs-content">
-                            <h1 class="page-title"><a href="{{ route('list-products.index') }}">{{ __('Products') }}</a></h1>
+                            <h1 class="page-title"><a href="{{ route('list-products.index') }}">{{ __('Products') }}</a>
+                            </h1>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
@@ -32,7 +33,8 @@
                         <div class="single-widget search">
                             <h3>{{ __('Search Product') }}</h3>
                             <form action="{{ URL::current() }}" method="get">
-                                <x-form.input name="slug" placeholder="{{ __('product name...') }}" :value="request('slug')" />
+                                <x-form.input name="slug" placeholder="{{ __('product name...') }}"
+                                    :value="request('slug')" />
                                 <button type="submit"><i class="lni lni-search-alt"></i></button>
                             </form>
                         </div>
@@ -69,8 +71,10 @@
                                             <option><a href="">A - Z Product</a></option>
                                             <option><a href="">Z - A Product</a></option>
                                         </select>
-                                        <h3 class="total-show-product">{{ __('Showing') }}: {{ $products->firstItem() }} -
-                                            {{ $products->lastItem() }} {{ __('of') }} {{ $products->total() }} {{ __('items') }}</h3>
+                                        <h3 class="total-show-product">{{ __('Showing') }}:
+                                            {{ $products->firstItem() }} -
+                                            {{ $products->lastItem() }} {{ __('of') }} {{ $products->total() }}
+                                            {{ __('items') }}</h3>
 
                                     </div>
                                 </div>
@@ -101,10 +105,11 @@
                                             <!-- Start Single Product -->
                                             <div class="single-product">
                                                 <div class="product-image">
-                                                    <img src="{{ $product->image_url }}" alt="#">
+                                                    <img src="{{ $product->thumb_url }}" alt="#">
                                                     <div class="button">
                                                         <a href="{{ route('products.show', $product->slug) }}"
-                                                            class="btn"><i class="lni lni-cart"></i> {{ __('Add to Cart') }}</a>
+                                                            class="btn"><i class="lni lni-cart"></i>
+                                                            {{ __('Add to Cart') }}</a>
                                                     </div>
                                                 </div>
                                                 <div class="product-info">

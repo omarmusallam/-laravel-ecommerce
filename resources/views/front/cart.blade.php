@@ -1,5 +1,29 @@
 <x-front-layout title="{{ __('Cart') }}">
+    @push('styles')
+        <style>
+            .notification-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+            }
 
+            .notification {
+                padding: 10px;
+                margin-bottom: 10px;
+                color: #fff;
+                border-radius: 4px;
+            }
+
+            .success {
+                background-color: #0167F3;
+            }
+
+            .error {
+                background-color: #f44336;
+            }
+        </style>
+    @endpush
     <x-slot:breadcrumb>
         <div class="breadcrumbs">
             <div class="container">
@@ -50,6 +74,7 @@
                     </div>
                 </div>
                 <!-- End Cart List Title -->
+                <div id="notification-container" class="notification-container"></div>
                 @foreach ($cart->get() as $item)
                     <!-- Cart Single List list -->
                     <div class="cart-single-list" id="{{ $item->id }}">
@@ -64,8 +89,8 @@
                                 <p class="product-des">
                                     <span><em>{{ __('Brand:') }}</em> {{ $item->product->category->name }}</span>
                                     @if ($item->product->sale_percent)
-                                        <span
-                                            class=""><em>{{ __('Discount:') }} </em>-{{ $item->product->sale_percent }}%</span>
+                                        <span class=""><em>{{ __('Discount:') }}
+                                            </em>-{{ $item->product->sale_percent }}%</span>
                                     @endif
                                 </p>
                             </div>
@@ -80,7 +105,8 @@
                                 <p>{{ Currency::format($item->product->price) }}</p>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
-                                <p>{{ Currency::format($item->quantity * $item->product->price) }}</p>
+                                <p id="item-total-{{ $item->id }}">
+                                    {{ Currency::format($item->quantity * $item->product->price) }}</p>
                             </div>
                             <div class="col-lg-1 col-md-2 col-12">
                                 <a class="remove-item" data-id="{{ $item->id }}" href="javascript:void(0)"><i
@@ -90,6 +116,8 @@
                     </div>
                     <!-- End Single List list -->
                 @endforeach
+
+
             </div>
             <div class="row">
                 <div class="col-12">
@@ -111,15 +139,20 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>{{ __('Cart Subtotal') }}<span>{{ Currency::format($cart->total()) }}</span></li>
+                                        <li>{{ __('Cart Subtotal') }}<span
+                                                id="cart-subtotal">{{ Currency::format($cart->total()) }}</span>
+                                        </li>
                                         <li>{{ __('Shipping') }}<span>{{ __('Free') }}</span></li>
-                                        <li>{{ __('Tax') }}<span>{{ Currency::format(00.00) }}</span></li>
-                                        <li class="last">{{ __('You Pay') }}<span>{{ Currency::format($cart->total()) }}</span>
+                                        <li>{{ __('Tax') }}<span>{{ Currency::format(00.0) }}</span></li>
+                                        <li class="last">
+                                            {{ __('You Pay') }}<span
+                                                id="you-pay">{{ Currency::format($cart->total()) }}</span>
                                         </li>
                                     </ul>
                                     <div class="button">
                                         <a href="{{ route('checkout') }}" class="btn">{{ __('Checkout') }}</a>
-                                        <a href="{{ route('list-products.index') }}" class="btn btn-alt">{{ __('Continue shopping') }}</a>
+                                        <a href="{{ route('list-products.index') }}"
+                                            class="btn btn-alt">{{ __('Continue shopping') }}</a>
                                     </div>
                                 </div>
                             </div>

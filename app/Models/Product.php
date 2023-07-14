@@ -27,7 +27,7 @@ class Product extends Model
     protected $hidden = ['image', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $appends = [
-        'image_url',
+        'image_url', 'url'
     ];
     // يتم استدعائها مع المودل مباشرة
     protected static function booted()
@@ -40,15 +40,15 @@ class Product extends Model
         });
     }
 
-    // public function scopeFilter2(Builder $builder, $filters)
-    // {
-    //     if ($filters['name'] ?? false) {
-    //         $builder->where('products.name', 'LIKE', "%{$filters['name']}%");
-    //     }
-    //     if ($filters['category_id'] ?? false) {
-    //         $builder->where('products.category_id', '=', $filters['category_id']);
-    //     }
-    // }
+    public function scopeFilter2(Builder $builder, $filters)
+    {
+        if ($filters['name'] ?? false) {
+            $builder->where('products.name', 'LIKE', "%{$filters['name']}%");
+        }
+        if ($filters['category_id'] ?? false) {
+            $builder->where('products.category_id', '=', $filters['category_id']);
+        }
+    }
 
     public function category()
     {
@@ -89,6 +89,26 @@ class Product extends Model
             return $this->image;
         }
         return asset('storage/' . $this->image);
+    }
+
+    public function getUrlAttribute()
+    {
+        return route('products.show', $this->slug);
+    }
+
+    public function getThumbUrlAttribute()
+    {
+        if (!$this->image) {
+            return 'https://www.incathlab.com/images/products/default_product.png';
+        }
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+        return route('dashboard.image', [
+            'public',
+            '243',
+            '243', $this->image
+        ]);
     }
 
 

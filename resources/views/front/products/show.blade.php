@@ -24,6 +24,21 @@
     <section class="item-details section">
         <div class="container">
             <div class="top-area">
+                <div id="notice"
+                    style="display: none;
+                        background-color: #0167F3;
+                        color: white;
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        margin-bottom: 10px;
+                        /* Add custom styles */
+                        position: fixed;
+                        width: 200px;
+                        top: 20px;
+                        right: 20px;
+                        z-index: 9999;">
+                </div>
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-images">
@@ -44,13 +59,14 @@
                                 @endif
                             </h3>
                             <p class="info-text">{{ $product->description }}</p>
-                            <form action="{{ route('cart.store') }}" method="post">
+                            <form action="{{ route('cart.store') }}" method="post" id="cart-form">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="row">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button mt-50">
-                                            <button class="btn" type="submit" style="width: 100%;">{{ __('Add to Cart') }}</button>
+                                            <a class="btn" id="add-to-cart" href="#"
+                                                style="width: 100%;">{{ __('Add to Cart') }}</a>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">

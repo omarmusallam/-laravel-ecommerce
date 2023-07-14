@@ -1,15 +1,15 @@
 <div class="cart-items">
     <a href="javascript:void(0)" class="main-btn">
         <i class="lni lni-cart"></i>
-        <span class="total-items">{{ $items->count() }}</span>
+        <span class="total-items" id="cart-items">{{ $items->count() }}</span>
     </a>
     <!-- Shopping Item -->
     <div class="shopping-item">
         <div class="dropdown-cart-header">
-            <span>{{ $items->count() }} {{ __('Items') }}</span>
+            <span><span id="cart-items2">{{ $items->count() }}</span> {{ __('Items') }}</span>
             <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
         </div>
-        <ul class="shopping-list">
+        <ul class="shopping-list" id="cart-list">
             @foreach ($items as $item)
                 <li id="{{ $item->id }}">
                     <a href="javascript:void(0)" class="remove remove-item" title="Remove this item"

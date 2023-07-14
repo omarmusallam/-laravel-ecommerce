@@ -29,7 +29,8 @@
 
     <x-form.input type="file" name="image" accept="image/*" />
     @if ($category->image)
-        <img src="{{ asset('storage/' . $category->image) }}" alt="" height="60">
+        <img src="{{ asset('storage/' . $category->image) }}" alt="img" class="img-fit m-1 border p-1"
+            height="60">
     @endif
 </div>
 <div class="form-group">
