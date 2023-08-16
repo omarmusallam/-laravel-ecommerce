@@ -20,7 +20,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $this->authorize('view-any', Store::class);
+        Gate::authorize('stores.view');
         $request = request();
 
         $stores = Store::with(['products'])
@@ -39,7 +39,7 @@ class StoreController extends Controller
      */
     public function create()
     {
-        if (Gate::denies('categories.view')) {
+        if (!Gate::allows('stores.create')) {
             abort(403);
         }
         // $parents = Store::all(); // return collection object
@@ -90,7 +90,7 @@ class StoreController extends Controller
 
     public function show(Store $store)
     {
-        if (Gate::denies('store.view')) {
+        if (Gate::denies('stores.view')) {
             abort(403);
         }
         return view('dashboard.stores.show', [
@@ -106,6 +106,7 @@ class StoreController extends Controller
      */
     public function update(StoreRequest $request, $id)
     {
+        Gate::authorize('stores.update');
         $category = Store::findOrFail($id);
         $old_image = $request->logo_image;
 

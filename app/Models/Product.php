@@ -104,7 +104,7 @@ class Product extends Model
         if (Str::startsWith($this->image, ['http://', 'https://'])) {
             return $this->image;
         }
-        return route('dashboard.image', [
+        return route('image', [
             'public',
             '243',
             '243', $this->image

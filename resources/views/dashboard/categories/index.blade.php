@@ -7,8 +7,10 @@
 @section('content')
     <div class="mb-5">
         @if (Auth::user()->can('categories.create'))
-            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
-            <a href="{{ route('dashboard.categories.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a>
+            <a title="Create category" href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2"><i
+                    class="fas fa-plus"></i></a>
+            <a title="Recycle bin" href="{{ route('dashboard.categories.trash') }}" class="btn btn-sm btn-outline-dark"><i
+                    class="fas fa-trash-alt"></i></a>
         @endif
     </div>
 
@@ -22,7 +24,9 @@
             <option value="active" @selected(request('status') == 'active')>Active</option>
             <option value="archived" @selected(request('status') == 'archived')>Archived</option>
         </select>
-        <button class="btn btn-dark mx-2">Filter</button>
+        <button class="btn btn-primary mx-2">
+            <i class="fas fa-search"></i>
+        </button>
     </form>
     <table class="table">
         <thead>
@@ -51,7 +55,7 @@
                         <td>
                             @can('categories.update')
                                 <a href="{{ route('dashboard.categories.edit', $category->id) }}"
-                                    class="btn btn-sm btn-outline-success">Edite</a>
+                                    class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i></a>
                             @endcan
                         </td>
                         <td>
@@ -59,7 +63,8 @@
                                 <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             @endcan
                         </td>

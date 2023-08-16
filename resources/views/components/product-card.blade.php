@@ -34,12 +34,12 @@
         </div>
     </div>
 </div>
-@push('scripts')
-    <script>
+{{-- @push('scripts') --}}
+    {{-- <script>
         const csrf_token = "{{ csrf_token() }}";
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
     {{-- <script src="{{ asset('build/assets/js/cart.js') }}"></script> --}}
-@endpush
-@vite('resources/js/cart.js')
+{{-- @endpush --}}
+{{-- @vite('resources/js/cart.js') --}}
 <!-- End Single Product -->

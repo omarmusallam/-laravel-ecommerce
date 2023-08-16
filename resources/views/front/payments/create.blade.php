@@ -7,7 +7,8 @@
 
                     <form action="" method="post" id="payment-form">
                         <div id="payment-element"></div>
-                        <button type="submit" id="submit" class="btn" style="background: rgb(54, 101, 240); color: #fff; margin-top: 7px;">
+                        <button type="submit" id="submit" class="btn"
+                            style="background: rgb(54, 101, 240); color: #fff; margin-top: 7px;">
                             <span id="button-text">Pay now</span>
                             <span id="spinner" style="display: none;">Processing...</span>
                         </button>
@@ -79,7 +80,7 @@
 
             setLoading(false);
         }
-        
+
         // ------- UI helpers -------
 
         function showMessage(messageText) {

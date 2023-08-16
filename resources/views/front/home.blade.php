@@ -78,8 +78,8 @@
                 <div class="col-12">
                     <div class="section-title">
                         <h2>{{ __('Recommended for you') }}</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p>
+                        <p>{{ __('Discover our hand-picked collection of top-rated products designed just for you, We take pride in providing the best items that perfectly match your preferences and needs.') }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -135,8 +135,8 @@
                 <div class="col-12">
                     <div class="section-title">
                         <h2>{{ __('Recently Added') }}</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p>
+                        <p>{{ __('Explore our latest additions to our collection, We are constantly updating our product range to bring you the latest and most innovative items in the market.') }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -217,7 +217,7 @@
                     </div>
                     <div class="media-body">
                         <h5>{{ __('Free Shipping.') }}</h5>
-                        <span>{{ __('On order over $99.') }}</span>
+                        <span>{{ __('Shop now at no additional cost.') }}</span>
                     </div>
                 </li>
                 <!-- Money Return -->

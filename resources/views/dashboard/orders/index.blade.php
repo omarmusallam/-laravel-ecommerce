@@ -17,10 +17,11 @@
 
     <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
         <x-form.input name="name" placeholder="number of order" class="mx-2" :value="request('name')" />
-        <button class="btn btn-dark mx-2">Filter</button>
-    </form>
+        <button class="btn btn-primary mx-2">
+            <i class="fas fa-search"></i>
+        </button>    </form>
     <h4 style="font-family: 'Times New Roman', Times, serif">Orders Details:</h4>
-    <table class="table" border = "1" style="border: 2px solid black;">
+    <table class="table" border="1" style="border: 2px solid black;">
         <thead>
             <tr style="background-color: #817d7d; text-align: center">
                 <th>ID</th>
@@ -29,8 +30,8 @@
                 <th>User</th>
                 <th>Payment</th>
                 {{-- <th>Currency</th> --}}
-                <th>Total-Price</th>
-                <th>Payment-Status</th>
+                <th>Payment Amount</th>
+                <th>Payment Status</th>
                 <th>Created At</th>
                 <th colspan="3">Processing</th>
             </tr>
@@ -49,22 +50,24 @@
                         <td>{{ $order->payment->status }}</td>
                         <td>{{ $order->created_at }}</td>
                         <td>
-                            <a href="{{ route('dashboard.orders.print', $order->id) }}"
-                                class="btn btn-sm btn-outline-info">Print</a>
+                            <a title="Print pdf" href="{{ route('dashboard.orders.print', $order->id) }}" class="btn btn-sm btn-outline-info"
+                                target="_blank"><i class="fas fa-print"></i></a>
                         </td>
-                        <td>
-                            <a href="{{ route('dashboard.orders.show', $order->id) }}"
-                                class="btn btn-sm btn-outline-success">Show</a>
-                        </td>
-                        <td>
-                            @can('orders.delete')
+                        @can('orders.show')
+                            <td>
+                                <a title="Show order" href="{{ route('dashboard.orders.show', $order->id) }}"
+                                    class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i></a>
+                            </td>
+                        @endcan
+                        @can('orders.delete')
+                            <td>
                                 <form action="{{ route('dashboard.orders.destroy', $order->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button title="Delete order" type="submit" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </form>
-                            @endcan
-                        </td>
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
             @else

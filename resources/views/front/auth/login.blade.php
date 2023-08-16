@@ -9,24 +9,24 @@
                         @csrf
                         <div class="card-body">
                             <div class="title">
-                                <h3>Login Now</h3>
-                                <p>You can login using your social media account or email address.</p>
+                                <h3>{{ __('Login Now') }}</h3>
+                                <p>{{ __('You can login using your social media account or email address.') }}</p>
                             </div>
                             <div class="social-login">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-4 col-12"><a class="btn facebook-btn"
-                                            href="{{ route('auth.socilaite.redirect' , 'facebook') }}"><i class="lni lni-facebook-filled"></i> Facebook
-                                            login</a></div>
-                                    {{-- <div class="col-lg-4 col-md-4 col-12"><a class="btn twitter-btn"
-                                            href="javascript:void(0)"><i class="lni lni-twitter-original"></i> Twitter
-                                            login</a></div> --}}
+                                            href="{{ route('auth.socilaite.redirect', 'facebook') }}"><i
+                                                class="lni lni-facebook-filled"></i>
+                                            {{ __('Facebook login') }}</a>
+                                    </div>
                                     <div class="col-lg-6 col-md-4 col-12"><a class="btn google-btn"
-                                            href="{{ route('auth.socilaite.redirect' , 'google') }}"><i class="lni lni-google"></i> Google login</a>
+                                            href="{{ route('auth.socilaite.redirect', 'google') }}"><i
+                                                class="lni lni-google"></i> {{ __('Google login') }}</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="alt-option">
-                                <span>Or</span>
+                                <span>{{ __('Or') }}</span>
                             </div>
                             @if ($errors->has(config('fortify.username')))
                                 <div class="alert alert-danger">
@@ -34,30 +34,31 @@
                                 </div>
                             @endif
                             <div class="form-group input-group">
-                                <label for="reg-fn">Email</label>
+                                <label for="reg-fn">{{ __('Email') }}</label>
                                 <input class="form-control" type="text" name="{{ config('fortify.username') }}"
                                     id="reg-email" required>
                             </div>
                             <div class="form-group input-group">
-                                <label for="reg-fn">Password</label>
+                                <label for="reg-fn">{{ __('Password') }}</label>
                                 <input class="form-control" type="password" name="password" id="reg-pass" required>
                             </div>
                             <div class="d-flex flex-wrap justify-content-between bottom-content">
                                 <div class="form-check">
                                     <input type="checkbox" name="remember" value="1"
                                         class="form-check-input width-auto" id="exampleCheck1">
-                                    <label class="form-check-label">Remember me</label>
+                                    <label class="form-check-label">{{ __('Remember me') }}</label>
                                 </div>
                                 @if (Route::has('password.request'))
-                                    <a class="lost-pass" href="{{ route('password.request') }}">Forgot password?</a>
+                                    <a class="lost-pass"
+                                        href="{{ route('password.request') }}">{{ __('Forgot password?') }}</a>
                                 @endif
                             </div>
                             <div class="button">
-                                <button class="btn" type="submit">Login</button>
+                                <button class="btn" type="submit">{{ __('Login') }}</button>
                             </div>
                             @if (Route::has('register'))
-                                <p class="outer-link">Don't have an account? <a href="{{ route('user.register') }}">Register
-                                        here </a>
+                                <p class="outer-link">{{ __("Don't have an account?") }}
+                                    <a href="{{ route('user.register') }}">{{ __('Register here') }}</a>
                                 </p>
                             @endif
                         </div>

@@ -30,23 +30,19 @@ class ProfileCotroller extends Controller
             'country' => ['required', 'string', 'size:2'],
         ]);
 
-        $user = $request->user(); // $user = Auth::user();
+        $user = $request->user();
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads', [
+                'disk' => 'public'
+            ]);
+            $user->profile->image = $imagePath;
+        }
 
         $user->profile->fill($request->all())->save();
 
         return redirect()->route('dashboard.profile.edit')
             ->with('success', 'Profile updated!');
 
-        // $profile = $user->profile;
-        // if ($profile->first_name) {
-        //     $profile->update($request->all());
-        // } else {
-        //     // $request->merge([
-        //     //     'user_id' => $user->id,
-        //     // ]);
-        //     // Profile::create($request->all());
-
-        //     $user->profile()->create($request->all());
-        // }
     }
 }

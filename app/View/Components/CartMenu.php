@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class CartMenu extends Component
 {
     public $items;
+    public $items2;
     public $total;
     /**
      * Create a new component instance.
@@ -17,7 +18,8 @@ class CartMenu extends Component
      */
     public function __construct(CartRepository $cart)
     {
-        $this->items = $cart->get();
+        $this->items = $cart->get()->sortByDesc('updated_at')->take(3);
+        $this->items2 = $cart->get()->sortByDesc('updated_at');
         $this->total = $cart->total();
     }
 

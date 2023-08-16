@@ -6,7 +6,7 @@
             </a>
         </x-slot>
         <a href="{{ route('home') }}">
-            <img src="http://127.0.0.1:8000/assets/images/logo/logo.svg" alt="#"
+            <img src="{{ asset('assets/images/logo/logo.jpg') }}" alt="#"
                 style="margin: 30px; display: block; margin-left: auto; margin-right: auto; width: 50%;">
         </a>
 

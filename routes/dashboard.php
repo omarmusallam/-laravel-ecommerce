@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\ProfileCotroller;
 use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Controllers\Dashboard\StoreController;
 use App\Http\Controllers\Dashboard\UsersController;
+use App\Http\Controllers\Dashboard\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -19,7 +20,7 @@ Route::group([
     'as' => 'dashboard.',
     'prefix' => 'admin/dashboard',
 ], function () {
-    // Dashboard Home Page
+    // Home Page
     Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard');
     Route::get('/charts/orders', [DashboardController::class, 'orderChart'])
@@ -60,21 +61,15 @@ Route::group([
 
     // nav in dashboard
     Route::resources([
-        'products' => ProductsController::class,
         'categories' => CategoriesController::class,
         'stores' => StoreController::class,
+        'products' => ProductsController::class,
         'orders' => OrdersController::class,
         'roles' => RolesController::class,
         'admins' => AdminsController::class,
+        'users' => UsersController::class,
+        'setting' => SettingController::class,
     ]);
-    Route::resource('users', UsersController::class)->except([
-        'create',
-        'store'
-    ]);
-
-    Route::get('images/{disk}/{width}x{height}/{image}', [ImagesController::class, 'index'])
-        ->name('image')
-        ->where('image', '.*');
 });
 
 // Route::middleware('auth')->as('dashboard.')->prefix('dashboard')->group(function() {

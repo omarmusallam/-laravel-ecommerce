@@ -10,9 +10,10 @@
 @section('content')
 
     <div class="mb-5">
-        {{-- @can('create', 'App\Models\Role') --}}
-        <a href="{{ route('dashboard.roles.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
-        {{-- @endcan --}}
+        @can('roles.create')
+            <a title="Create role" href="{{ route('dashboard.roles.create') }}" class="btn btn-sm btn-outline-primary mr-2"><i
+                    class="fas fa-plus"></i></a>
+        @endcan
     </div>
 
     <x-alert type="success" />
@@ -20,7 +21,9 @@
 
     <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
         <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
-        <button class="btn btn-dark mx-2">Filter</button>
+        <button class="btn btn-primary mx-2">
+            <i class="fas fa-search"></i>
+        </button>
     </form>
 
     <table class="table">
@@ -38,23 +41,24 @@
                     <td>{{ $role->id }}</td>
                     <td><a href="{{ route('dashboard.roles.edit', $role->id) }}">{{ $role->name }}</a></td>
                     <td>{{ $role->created_at }}</td>
-                    <td>
-                        @can('update', $role)
-                            <a href="{{ route('dashboard.roles.edit', $role->id) }}"
-                                class="btn btn-sm btn-outline-success">Edit</a>
-                        @endcan
-                    </td>
-                    <td>
-                        @can('delete', $role)
+                    @can('roles.update')
+                        <td>
+                            <a href="{{ route('dashboard.roles.edit', $role->id) }}" class="btn btn-sm btn-outline-success"><i
+                                    class="fas fa-edit"></i></a>
+                        </td>
+                    @endcan
+                    @can('roles.delete')
+                        <td>
                             <form action="{{ route('dashboard.roles.destroy', $role->id) }}" method="post">
                                 @csrf
                                 <!-- Form Method Spoofing -->
                                 <input type="hidden" name="_method" value="delete">
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                        class="fas fa-trash"></i></button>
                             </form>
-                        @endcan
-                    </td>
+                        </td>
+                    @endcan
                 </tr>
             @empty
                 <tr>

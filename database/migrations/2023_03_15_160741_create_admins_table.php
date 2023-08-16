@@ -16,11 +16,11 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('username')->unique();
             $table->string('password');
             $table->string('phone_number')->unique();
             $table->boolean('super_admin')->default(false);
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->foreignId('store_id')->nullable()->constrained('stores')->nullOnDelete();
             $table->timestamps();
         });
     }

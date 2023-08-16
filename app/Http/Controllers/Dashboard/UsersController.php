@@ -17,7 +17,7 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index()
     {
         Gate::authorize('users.view');
@@ -32,14 +32,13 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create(User $user)
-    // {
-    //     return view('dashboard.users.create', [
-    //         'roles' => Role::all(),
-    //         'user' => new User(),
-    //         'user_roles' => $user->roles()->pluck('id')->toArray(),
-    //     ]);
-    // }
+    public function create(User $user)
+    {
+        Gate::authorize('users.create');
+        return view('dashboard.users.create', [
+            'roles' => Role::all(),
+        ]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,26 +46,27 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['nullable', 'min:9'],
-    //         'roles' => 'nullable|array',
-    //     ]);
+    public function store(Request $request)
+    {
+        Gate::authorize('users.create');
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['nullable', 'min:9'],
+            'roles' => 'nullable|array',
+        ]);
 
-    //     $user = User::create([
-    //         'name' => $request['name'],
-    //         'email' => $request['email'],
-    //         'password' => Hash::make($request['password']),
-    //     ]);
-    //     $user->roles()->attach($request->roles);
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        $user->roles()->attach($request->roles);
 
-    //     return redirect()
-    //         ->route('dashboard.users.index')
-    //         ->with('success', 'User created successfully');
-    // }
+        return redirect()
+            ->route('dashboard.users.index')
+            ->with('success', 'User created successfully');
+    }
 
     /**
      * Display the specified resource.
@@ -87,6 +87,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        Gate::authorize('users.update');
         $roles = Role::all();
         $user_roles = $user->roles()->pluck('id')->toArray();
 
@@ -102,6 +103,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        Gate::authorize('users.update');
         $request->validate([
             'name' => ['nullable', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('categories', 'name')->ignore($user)],
@@ -125,6 +127,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('users.delete');
         User::destroy($id);
         return redirect()
             ->route('dashboard.users.index')

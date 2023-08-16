@@ -63,8 +63,13 @@
                         <td>{{ $product->product_name }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->price }}</td>
-                        <td>{{ $order->payment->amount }}</td>
+                        <td>{{ $product->price * $product->quantity }}</td>
+                    </tr>
                 @endforeach
+                <tr style="text-align: center">
+                    <th colspan="3">Total Amount :</th>
+                    <th colspan="1">
+                        {{ $order->items->sum(function ($product) {return $product->price * $product->quantity;}) }}</th>
                 </tr>
             @endif
 

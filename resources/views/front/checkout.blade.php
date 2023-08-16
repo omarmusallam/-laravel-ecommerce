@@ -52,11 +52,13 @@
                                                     <label>{{ __('User Name') }}</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input required name="addr[billing][first_name]"
+                                                            <x-form.input required id="billing_first_name"
+                                                                name="addr[billing][first_name]" :value="old('addr.billing.first_name')"
                                                                 placeholder="{{ __('First Name') }}" />
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input required name="addr[billing][last_name]"
+                                                            <x-form.input required id="billing_last_name"
+                                                                name="addr[billing][last_name]" :value="old('addr.billing.last_name')"
                                                                 placeholder="{{ __('Last Name') }}" />
                                                         </div>
                                                     </div>
@@ -66,7 +68,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Email Address (optional)') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[billing][email]"
+                                                        <x-form.input id="billing_email" name="addr[billing][email]"
+                                                            :value="old('addr.billing.email')"
                                                             placeholder="{{ __('Email Address') }}" />
                                                     </div>
                                                 </div>
@@ -75,7 +78,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Phone Number') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input required name="addr[billing][phone_number]"
+                                                        <x-form.input required id="billing_phone_number"
+                                                            name="addr[billing][phone_number]" :value="old('addr.billing.phone_number')"
                                                             placeholder="{{ __('Phone Number') }}" />
                                                     </div>
                                                 </div>
@@ -84,7 +88,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Mailing Address') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input required name="addr[billing][street_address]"
+                                                        <x-form.input required id="billing_street_address"
+                                                            name="addr[billing][street_address]" :value="old('addr.billing.street_address')"
                                                             placeholder="{{ __('Mailing Address') }}" />
                                                     </div>
                                                 </div>
@@ -93,7 +98,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('City') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input required name="addr[billing][city]"
+                                                        <x-form.input required id="billing_city"
+                                                            name="addr[billing][city]" :value="old('addr.billing.city')"
                                                             placeholder="{{ __('City') }}" />
                                                     </div>
                                                 </div>
@@ -102,7 +108,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Post Code (optional)') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[billing][postal_code]"
+                                                        <x-form.input id="billing_postal_code"
+                                                            name="addr[billing][postal_code]" :value="old('addr.billing.postal_code')"
                                                             placeholder="{{ __('Post Code') }}" />
                                                     </div>
                                                 </div>
@@ -111,8 +118,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Region/State (optional)') }}</label>
                                                     <div class="select-items">
-                                                        <x-form.input name="addr[billing][state]"
-                                                            placeholder="{{ __('State') }}" />
+                                                        <x-form.input id="billing_state" name="addr[billing][state]"
+                                                            :value="old('addr.billing.state')" placeholder="{{ __('State') }}" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,18 +127,18 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Country') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.select required name="addr[billing][country]"
-                                                            :options="$countries" />
+                                                        <x-form.select required id="billing_country" :value="old('addr.billing.country')"
+                                                            name="addr[billing][country]" :options="$countries" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-md-12">
+                                            <div class="col-md-12">
                                                 <div class="single-checkbox checkbox-style-3">
                                                     <input type="checkbox" id="checkbox-3">
                                                     <label for="checkbox-3"><span></span></label>
                                                     <p>{{ __('My delivery and mailing addresses are the same.') }}</p>
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                             <div class="col-md-12">
                                                 <div class="single-form button">
                                                     <button type="button" class="btn" data-bs-toggle="collapse"
@@ -144,7 +151,8 @@
                                 </li>
                                 <li>
                                     <h6 class="title collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                        aria-expanded="false" aria-controls="collapseFour">{{ __('Shipping Address') }}
+                                        aria-expanded="false" aria-controls="collapseFour">
+                                        {{ __('Shipping Address') }}
                                     </h6>
                                     <section class="checkout-steps-form-content collapse" id="collapseFour"
                                         aria-labelledby="headingFour" data-bs-parent="#accordionExample">
@@ -154,11 +162,13 @@
                                                     <label>{{ __('User Name') }}</label>
                                                     <div class="row">
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input required name="addr[shipping][first_name]"
+                                                            <x-form.input id="shipping_first_name" required
+                                                                name="addr[shipping][first_name]" :value="old('addr.shipping.first_name')"
                                                                 placeholder="{{ __('First Name') }}" />
                                                         </div>
                                                         <div class="col-md-6 form-input form">
-                                                            <x-form.input required name="addr[shipping][last_name]"
+                                                            <x-form.input id="shipping_last_name" required
+                                                                :value="old('addr.shipping.last_name')" name="addr[shipping][last_name]"
                                                                 placeholder="{{ __('Last Name') }}" />
                                                         </div>
                                                     </div>
@@ -168,7 +178,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Email Address (optional)') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[shipping][email]"
+                                                        <x-form.input id="shipping_email" name="addr[shipping][email]"
+                                                            :value="old('addr.shipping.email')"
                                                             placeholder="{{ __('Email Address') }}" />
                                                     </div>
                                                 </div>
@@ -177,7 +188,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Phone Number') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input required name="addr[shipping][phone_number]"
+                                                        <x-form.input required id="shipping_phone_number"
+                                                            name="addr[shipping][phone_number]" :value="old('addr.shipping.phone_number')"
                                                             placeholder="{{ __('Phone Number') }}" />
                                                     </div>
                                                 </div>
@@ -186,7 +198,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Mailing Address') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input required name="addr[shipping][street_address]"
+                                                        <x-form.input required id="shipping_street_address"
+                                                            name="addr[shipping][street_address]" :value="old('addr.shipping.street_address')"
                                                             placeholder="{{ __('Mailing Address') }}" />
                                                     </div>
                                                 </div>
@@ -195,7 +208,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('City') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input required name="addr[shipping][city]"
+                                                        <x-form.input required id="shipping_city"
+                                                            name="addr[shipping][city]" :value="old('addr.shipping.city')"
                                                             placeholder="{{ __('City') }}" />
                                                     </div>
                                                 </div>
@@ -204,7 +218,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Post Code (optional)') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.input name="addr[shipping][postal_code]"
+                                                        <x-form.input id="shipping_postal_code"
+                                                            name="addr[shipping][postal_code]" :value="old('addr.shipping.postal_code')"
                                                             placeholder="{{ __('Post Code') }}" />
                                                     </div>
                                                 </div>
@@ -213,8 +228,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Region/State (optional)') }}</label>
                                                     <div class="select-items">
-                                                        <x-form.input name="addr[shipping][state]"
-                                                            placeholder="{{ __('State') }}" />
+                                                        <x-form.input id="shipping_state" name="addr[shipping][state]"
+                                                            :value="old('addr.shipping.state')" placeholder="{{ __('State') }}" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -222,7 +237,8 @@
                                                 <div class="single-form form-default">
                                                     <label>{{ __('Country') }}</label>
                                                     <div class="form-input form">
-                                                        <x-form.select required name="addr[shipping][country]"
+                                                        <x-form.select required id="shipping_country"
+                                                            :value="old('addr.shipping.country')" name="addr[shipping][country]"
                                                             :options="$countries" />
                                                     </div>
                                                 </div>
@@ -233,28 +249,8 @@
                                                         data-bs-target="#collapseThree" aria-expanded="false"
                                                         aria-controls="collapseThree">{{ __('previous') }}</button>
 
-                                                    <a class="btn" data-bs-toggle="collapse"
-                                                        data-bs-target="#collapsefive" aria-expanded="false"
-                                                        aria-controls="collapsefive"
-                                                        class="btn btn-alt">{{ __('Save & Continue') }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </li>
-                                <li>
-                                    <h6 class="title collapsed" data-bs-toggle="collapse"
-                                        data-bs-target="#collapsefive" aria-expanded="false"
-                                        aria-controls="collapsefive">{{ __('Payment Info') }}</h6>
-                                    <section class="checkout-steps-form-content collapse" id="collapsefive"
-                                        aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="checkout-payment-form">
-                                                    <div class="single-form form-default button">
-                                                        <button type="submit" id="submit"
-                                                            class="btn">{{ __('pay now') }}</button>
-                                                    </div>
+                                                    <button class="btn"
+                                                        type="submit">{{ __('Save & Continue') }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,7 +262,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="checkout-sidebar">
-                        <div class="checkout-sidebar-coupon">
+                        {{-- <div class="checkout-sidebar-coupon">
                             <p>{{ __('Apply Coupon to get discount!') }}</p>
                             <form action="#">
                                 <div class="single-form form-default">
@@ -278,7 +274,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div> --}}
                         <div class="checkout-sidebar-price-table mt-30">
                             <p class="title">{{ __('You Pay') }}</p>
 
@@ -298,9 +294,11 @@
                             </div>
 
                             <div class="total-payable">
-                                <div class="payable-price">
-                                    <p class="value">{{ __('Subtotal Price:') }}</p>
-                                    <p class="price">{{ Currency::format($cart->total()) }}</p>
+                                <div class="payable-price" style="background: rgb(172, 183, 194); padding: 8px">
+                                    <p class="value" style="color: blue; font-weight: bold">
+                                        {{ __('Subtotal Price:') }}</p>
+                                    <p class="price" style="color: blue; font-weight: bold">
+                                        {{ Currency::format($cart->total()) }}</p>
                                 </div>
                             </div>
                             {{-- <div class="price-table-btn button">
@@ -317,4 +315,34 @@
             </div>
         </div>
     </section>
+    @push('scripts')
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#checkbox-3').on('change', function() {
+                    if ($(this).prop('checked')) {
+                        $('#shipping_first_name').val($('#billing_first_name').val());
+                        $('#shipping_last_name').val($('#billing_last_name').val());
+                        $('#shipping_email').val($('#billing_email').val());
+                        $('#shipping_phone_number').val($('#billing_phone_number').val());
+                        $('#shipping_street_address').val($('#billing_street_address').val());
+                        $('#shipping_city').val($('#billing_city').val());
+                        $('#shipping_postal_code').val($('#billing_postal_code').val());
+                        $('#shipping_state').val($('#billing_state').val());
+                        $('#shipping_country').val($('#billing_country').val());
+                    } else {
+                        $('#shipping_first_name').val('');
+                        $('#shipping_last_name').val('');
+                        $('#shipping_email').val('');
+                        $('#shipping_phone_number').val('');
+                        $('#shipping_street_address').val('');
+                        $('#shipping_city').val('');
+                        $('#shipping_postal_code').val('');
+                        $('#shipping_state').val('');
+                        $('#shipping_country').val('');
+                    }
+                });
+            });
+        </script>
+    @endpush
 </x-front-layout>

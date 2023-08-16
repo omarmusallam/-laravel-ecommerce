@@ -30,8 +30,7 @@
                     <div class="col-12">
                         <div class="section-title">
                             <h2>{{ __('Contact Us') }}</h2>
-                            <p>There are many variations of passages of Lorem
-                                Ipsum available, but the majority have suffered alteration in some form.</p>
+                            <p>{{ __('Welcome to our contact page, Feel free to get in touch with us using the form below or through your contact information provided.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -53,9 +52,9 @@
                                     <i class="lni lni-phone"></i>
                                     <h3>{{ __('Call us') }}</h3>
                                     <ul>
-                                        <li><a href="tel:+12345678900">+1 234 567 89 00 ({{ __('Toll free') }})</a>
+                                        <li><a href="tel:{{ $settings->phone }}">{{ $settings->phone }} ({{ __('Toll free') }})</a>
                                         </li>
-                                        <li><a href="tel:+58576983200">+5 857 698 32 00</a></li>
+                                        <li><a href="tel:+01234567890">+0 123 456 78 90</a></li>
                                     </ul>
                                 </div>
                                 <!-- End Single Info -->
@@ -64,9 +63,9 @@
                                     <i class="lni lni-envelope"></i>
                                     <h3>{{ __('Email communication') }}</h3>
                                     <ul>
-                                        <li><a href="mailto:goldenstore@gmail.com">goldenstore@gmail.com</a>
+                                        <li><a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a>
                                         </li>
-                                        <li><a href="mailto:omarrmo2001@gmail.com">omarrmo2001@gmail.com</a>
+                                        <li><a href="mailto:omarrmusallam@gmail.com">omarrmusallam@gmail.com</a>
                                         </li>
                                     </ul>
                                 </div>

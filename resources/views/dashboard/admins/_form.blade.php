@@ -24,10 +24,14 @@
     </select>
 </div>
 <div class="form-group">
-    <x-form.input label="User Name" name="username" :value="$admin->username" />
-</div>
-<div class="form-group">
     <x-form.input label="Phone Number" name="phone_number" :value="$admin->phone_number" />
+</div>
+
+<div class="form-group">
+    <label for="">Status</label>
+    <div>
+        <x-form.radio name="status" :checked="$admin->status" :options="['active' => 'Active', 'inactive' => 'inActive']" />
+    </div>
 </div>
 
 <fieldset>

@@ -2,60 +2,67 @@
 
 return [
     [
-        'icon' => 'nav-icon fas fa-tachometer-alt',
+        'icon' => "home",
         'route' => 'dashboard.dashboard',
-        'title' => 'Dashboard',
+        'title' => 'Home',
         'active' => 'dashboard.dashboard',
     ],
     [
-        'icon' => 'fas fa-tags nav-icon',
+        'icon' => 'category',
         'route' => 'dashboard.categories.index',
         'title' => 'Categories',
         'active' => 'dashboard.categories.*',
         'ability' => 'categories.view'
     ],
     [
-        'icon' => 'fas fa-box nav-icon',
+        'icon' => 'store',
         'route' => 'dashboard.stores.index',
         'title' => 'Stores',
         'active' => 'dashboard.stores.*',
-        'ability' => 'stors.view',
+        'ability' => 'stores.view',
     ],
     [
-        'icon' => 'fas fa-box nav-icon',
+        'icon' => 'shop',
         'route' => 'dashboard.products.index',
         'title' => 'Products',
         'active' => 'dashboard.products.*',
         'ability' => 'products.view'
     ],
     [
-        'icon' => 'fas fa-receipt nav-icon',
+        'icon' => 'local_shipping',
         'route' => 'dashboard.orders.index',
         'title' => 'Orders',
+        'badge' => 'New',
         'active' => 'dashboard.orders.*',
         'ability' => 'orders.view'
     ],
     [
-        'icon' => 'fas fa-shield nav-icon',
+        'icon' => 'gavel',
         'route' => 'dashboard.roles.index',
         'title' => 'Roles',
-        'badge' => 'New',
         'active' => 'dashboard.roles.*',
         'ability' => 'roles.view'
     ],
     [
-        'icon' => 'fas fa-users nav-icon',
+        'icon' => 'admin_panel_settings',
+        'route' => 'dashboard.admins.index',
+        'title' => 'Admins',
+        'active' => 'dashboard.admins.*',
+        'ability' => 'admins.view',
+    ],
+    [
+        'icon' => 'account_box',
         'route' => 'dashboard.users.index',
         'title' => 'Users',
         'active' => 'dashboard.users.*',
         'ability' => 'users.view',
     ],
     [
-        'icon' => 'fas fa-users nav-icon',
-        'route' => 'dashboard.admins.index',
-        'title' => 'Admins',
-        'active' => 'dashboard.admins.*',
-        'ability' => 'admins.view',
+        'icon' => 'settings',
+        'route' => 'dashboard.setting.index',
+        'title' => 'Settings',
+        'active' => 'dashboard.setting.*',
+        'ability' => 'settings.view',
     ],
 
 ];

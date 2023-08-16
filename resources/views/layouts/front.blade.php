@@ -7,7 +7,7 @@
     <title>{{ $title }}</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('storage/' . $settings->invoice_stamp) }}" />
 
     <!-- ========================= CSS here ========================= -->
 
@@ -152,7 +152,7 @@
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
                         <a class="navbar-brand" href="{{ route('home') }}">
-                            <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo">
+                            <img src="{{ asset('storage/' . $settings->website_logo) }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
                     </div>
@@ -326,14 +326,14 @@
     <!-- Start Footer Area -->
     <footer class="footer">
         <!-- Start Footer Top -->
-        <div class="footer-top">
+        {{-- <div class="footer-top">
             <div class="container">
                 <div class="inner-content">
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="footer-logo">
                                 <a href="{{ route('home') }}">
-                                    <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="#">
+                                    <img src="{{ asset('assets/images/logo/logo1.png') }}" alt="#">
                                 </a>
                             </div>
                         </div>
@@ -358,7 +358,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- End Footer Top -->
         <!-- Start Footer Middle -->
         <div class="footer-middle">
@@ -375,7 +375,7 @@
                                     <li><span>{{ __('Saturday') }} : </span> 10.00 am - 6.00 pm</li>
                                 </ul>
                                 <p class="mail">
-                                    <a href="mailto:support@shopgrids.com">support@shopgrids.com</a>
+                                    <a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a>
                                 </p>
                             </div>
                             <!-- End Single Widget -->
@@ -453,7 +453,7 @@
                         <div class="col-lg-4 col-12">
                             <div class="copyright">
                                 <p>{{ __('Designed and Developed by') }} :<a href="{{ route('home') }}"
-                                        rel="nofollow" target="_blank">{{ config('app.name') }}</a></p>
+                                        rel="nofollow" target="_blank">{{ $settings->name }}</a></p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
@@ -485,7 +485,6 @@
     <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/js/cart.js') }}"></script>
     @stack('scripts')
 
 </body>

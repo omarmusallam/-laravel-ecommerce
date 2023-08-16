@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -32,12 +33,14 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return Admin::create([
+        $admin = Admin::create([
             'name' => $input['name'],
             'email' => $input['email'],
-            'username' => $input['username'],
             'phone_number' => $input['phone_number'],
             'password' => Hash::make($input['password']),
         ]);
+
+        Auth::login($admin);
+        return $admin;
     }
 }

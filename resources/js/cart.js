@@ -14,7 +14,6 @@
                 _token: csrf_token
             },
             success: function (response) {
-                // Update the notification container with the success message
                 let message = "Product Updated !";
                 let cartTotal = response.cartTotal;
                 let itemTotal = response.itemTotal;
@@ -23,24 +22,17 @@
                 updateCartSubtotal(cartTotal);
                 updateItemTotal(id, itemTotal);
 
-                // Remove the message after 2 seconds
                 setTimeout(function () {
                     clearNotificationMessage();
                 }, 2000);
-
-                // Additional logic if needed
             },
             error: function (xhr, status, error) {
-                // Update the notification container with the error message
                 let message = "Error updating product quantity: " + error;
                 showNotificationMessage(message, 'error');
 
-                // Remove the message after 2 seconds
                 setTimeout(function () {
                     clearNotificationMessage();
                 }, 2000);
-
-                // Additional error handling if needed
             }
         });
     });
@@ -61,13 +53,13 @@
     }
 
     $('.remove-item').on('click', function (e) {
-        e.preventDefault(); // Prevent the default click behavior
+        e.preventDefault();
 
         let id = $(this).data('id');
         let $product = $(`#${id}`);
 
         $.ajax({
-            url: "/cart/" + id, // data-id
+            url: "/cart/" + id,
             method: 'delete',
             data: {
                 _token: csrf_token
@@ -98,6 +90,37 @@
         }, 2000);
     }
 
+    $('#add-to-cart').on('click', function (e) {
+        e.preventDefault();
+        var form = $('#cart-form');
+        var total = 0;
 
+        $.post(form.attr('action'), form.serialize(), function (response) {
+            var list = $('#cart-list');
+            list.empty();
+            $('#cart-items').text(response.cart.length);
+            $('#cart-items2').text(response.cart.length);
+
+            for (var i in response.cart) {
+                var item = response.cart[i];
+                total += item.quantity * item.product.price;
+                list.append(`<li id="${item.id}">
+                <a href="javascript:void(0)" class="remove remove-item" title="Remove this item"
+                  data-id="${item.id}"><i class="lni lni-close"></i></a>
+                <div class="cart-img-head">
+                  <a class="cart-img" href=""><img src="${item.product.image_url}" alt="#"></a>
+                </div>
+                <div class="content">
+                  <h4><a href="${item.product.url}">${item.product.name}</a></h4>
+                  <p class="quantity">${item.quantity}x - <span class="amount">${item.product.price}</span></p>
+                </div>
+              </li>`);
+            }
+            $('.total-amount').text(total);
+
+            // Show notice
+            $('#notice').text('Product added to cart !').fadeIn(300).delay(2000).fadeOut(300);
+        });
+    });
 
 })(jQuery);

@@ -6,7 +6,7 @@
             </a>
         </x-slot>
         <a href="{{ route('home') }}">
-            <img src="http://127.0.0.1:8000/assets/images/logo/logo.svg" alt="#"
+            <img src="{{ asset('assets/images/logo/logo.jpg') }}" alt="#"
                 style="margin: 30px; display: block; margin-left: auto; margin-right: auto; width: 50%;">
         </a>
 
@@ -18,7 +18,7 @@
 
             <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')" />
+                <x-label for="name" :value="__('User Name')" />
 
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
                     required autofocus />
@@ -30,16 +30,6 @@
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                     required />
-            </div>
-
-            <!-- User Name -->
-            <div class="mt-4">
-                <div>
-                    <x-label for="username" :value="__('User Name')" />
-
-                    <x-input id="username" class="block mt-1 w-full" type="text" name="username"
-                        :value="old('username')" />
-                </div>
             </div>
 
             <!-- Password -->
@@ -69,9 +59,9 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                {{-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
-                </a>
+                </a> --}}
 
                 <x-button class="ml-4">
                     {{ __('Register') }}

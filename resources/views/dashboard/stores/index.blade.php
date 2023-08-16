@@ -7,7 +7,8 @@
 @section('content')
     <div class="mb-5">
         @if (Auth::user()->can('stores.create'))
-            <a href="{{ route('dashboard.stores.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+            <a title="Create store" href="{{ route('dashboard.stores.create') }}" class="btn btn-sm btn-outline-primary mr-2"><i
+                    class="fas fa-plus"></i></a>
         @endif
     </div>
 
@@ -21,7 +22,9 @@
             <option value="active" @selected(request('status') == 'active')>Active</option>
             <option value="inactive" @selected(request('status') == 'inactive')>inActive</option>
         </select>
-        <button class="btn btn-dark mx-2">Filter</button>
+        <button class="btn btn-primary mx-2">
+            <i class="fas fa-search"></i>
+        </button>
     </form>
     <table class="table">
         <thead>
@@ -52,7 +55,7 @@
                         <td>
                             @can('stores.update')
                                 <a href="{{ route('dashboard.stores.edit', $store->id) }}"
-                                    class="btn btn-sm btn-outline-success">Edite</a>
+                                    class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i></a>
                             @endcan
                         </td>
                         <td>
@@ -60,7 +63,8 @@
                                 <form action="{{ route('dashboard.stores.destroy', $store->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             @endcan
                         </td>

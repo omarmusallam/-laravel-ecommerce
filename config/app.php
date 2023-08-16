@@ -190,6 +190,7 @@ return [
              */
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
             /*
              * Application Service Providers...
              */
@@ -199,7 +200,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\CartServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class
+        App\Providers\ViewComposerServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
     ],
 
     /*

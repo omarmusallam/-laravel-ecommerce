@@ -1,14 +1,13 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\CurrencyConverterController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\ImagesController;
 use App\Http\Controllers\Front\ListProductsController;
 use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaymentsController;
@@ -17,7 +16,6 @@ use App\Http\Controllers\Front\UserProfileController;
 use App\Http\Controllers\SendSms;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StripeWebhooksController;
-use App\Http\Livewire\ShowProducts;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -35,7 +33,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
 ], function () {
-    
+
     Route::get('user-profile', [UserProfileController::class, 'edit'])->name('user-profile.edit');
     Route::patch('user-profile', [UserProfileController::class, 'update'])->name('user-profile.update');
 
@@ -64,9 +62,6 @@ Route::group([
     Route::post('currency', [CurrencyConverterController::class, 'store'])
         ->name('currency.store');
 
-    // Route::post('checkout/create-payment', [PaymentsController::class, 'store'])
-    //     ->name('checkout.payment');
-
     Route::get('about-us', function () {
         return view('front.about');
     })->name('about-us');
@@ -93,29 +88,32 @@ Route::group([
     Route::resource('list-products', ListProductsController::class);
 });
 
+// Login with facebook and google
 Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])
     ->name('auth.socilaite.redirect');
 Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])
     ->name('auth.socilaite.callback');
 
-Route::get('auth/{provider}/user', [SocialController::class, 'index']);
-
+// Payment
 Route::get('orders/{order}/pay', [PaymentsController::class, 'create'])
     ->name('orders.payments.create');
-
 Route::post('orders/{order}/stripe/paymeny-intent', [PaymentsController::class, 'createStripePaymentIntent'])
     ->name('stripe.paymentIntent.create');
-
 Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])
     ->name('stripe.return');
-
+// Stripe webhook
 Route::any('stripe/webhook', [StripeWebhooksController::class, 'handle']);
 
+// Test delivery 
 Route::get('/orders/{order}', [OrdersController::class, 'show'])
     ->name('orders.show');
 
-// require __DIR__ . '/auth.php';
+// sms messages
+Route::get('send-sms', [SendSms::class, 'send']);
+
+// Working with images
+Route::get('images/{disk}/{width}x{height}/{image}', [ImagesController::class, 'index'])
+    ->name('image')
+    ->where('image', '.*');
 
 require __DIR__ . '/dashboard.php';
-
-Route::get('send-sms',[SendSms::class, 'send']);

@@ -11,11 +11,10 @@ class AuthenticateUser
     public function authenticate($request)
     {
 
-        $username = $request->post( config('fortify.username') );
+        $username = $request->post(config('fortify.username'));
         $password = $request->post('password');
 
-        $user = Admin::where('username', '=', $username)
-            ->orWhere('email', '=', $username)
+        $user = Admin::where('email', '=', $username)
             ->orWhere('phone_number', '=', $username)
             ->first();
 

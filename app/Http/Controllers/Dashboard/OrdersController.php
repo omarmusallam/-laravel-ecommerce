@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Facades\Cart;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use App\Models\Order;
@@ -14,8 +15,9 @@ class OrdersController extends Controller
 {
     public function print(Order $order)
     {
-        $pdf = Pdf::loadView('dashboard.orders.invoice', compact('order'));
-        return $pdf->download('invoice.pdf');
+        // $pdf = Pdf::loadView('dashboard.orders.invoice', compact('order'));
+        // return $pdf->download('invoice.pdf');
+        // $total = Cart::total();
         // return $pdf->stream();
         return view('dashboard.orders.invoice', compact('order'));
     }
@@ -28,18 +30,22 @@ class OrdersController extends Controller
         $request = request();
         $orders = Order::with(['store', 'payment', 'items'])
             ->filter($request->query())
+            ->orderBy('orders.created_at', 'desc')
             ->paginate(10);
         return view('dashboard.orders.index', compact('orders'));
     }
 
     public function show($id)
     {
-        if (!Gate::allows('orders.view')) {
+        if (!Gate::allows('orders.show')) {
             abort(403);
         }
         $order = Order::findOrFail($id);
-        $getID = DB::table('notifications')->where('data->order_id', $id)->pluck('id');
-        // Notification::where('id', $getID)->update(['read_at' => now()]);
+
+        $notificationId = DB::table('notifications')->where('data->order_id', $id)->pluck('id')->first();
+        if ($notificationId) {
+            Notification::find($notificationId)->update(['read_at' => now()]);
+        }
 
         return view('dashboard.orders.show', compact('order'));
     }
@@ -47,7 +53,9 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         $order = Order::findOrFail($id);
-        $this->authorize('delete', $order);
+        if (!Gate::allows('orders.delete')) {
+            abort(403);
+        }
         $order->delete();
 
         return redirect()->route('dashboard.orders.index')

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,7 @@ class AdminsController extends Controller
      */
     public function index()
     {
+        Gate::authorize('admins.view');
         $request = request();
         $admins = Admin::with(['store'])
             ->filter($request->query())
@@ -38,6 +40,7 @@ class AdminsController extends Controller
      */
     public function create(Admin $admin)
     {
+        Gate::authorize('admins.create');
         return view('dashboard.admins.create', [
             'roles' => Role::all(),
             'admin' => new Admin(),
@@ -54,12 +57,15 @@ class AdminsController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('admins.create');
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'store_id' => ['nullable', 'int', 'exists:stores,id'],
-            'username' => ['required', 'string', 'max:32', 'unique:admins,username'],
-            'phone_number' => 'required|min:9|numeric',
+            'name' => ['required', 'string', 'max:32', 'unique:admins,name'],
+            'phone_number' => 'required|min:9|numeric|unique:admins,phone_number',
+            'status' => 'in:active,inactive',
+            'password' => ['nullable', 'min:9'],
             'roles' => 'array',
         ]);
 
@@ -67,8 +73,10 @@ class AdminsController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'store_id' => $request['store_id'],
-            'username' => $request['username'],
+            'name' => $request['name'],
+            'status' => $request['status'],
             'phone_number' => $request['phone_number'],
+            'password' => Hash::make($request['password']),
         ]);
 
         $admin->roles()->attach($request->roles);
@@ -85,6 +93,7 @@ class AdminsController extends Controller
      */
     public function edit(Admin $admin)
     {
+        Gate::authorize('admins.update');
         $roles = Role::all();
         $admin_roles = $admin->roles()->pluck('id')->toArray();
 
@@ -100,11 +109,13 @@ class AdminsController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
+        Gate::authorize('admins.update');
         $request->validate([
             'name' => 'nullable|string|max:255',
             'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('admins', 'name')->ignore($admin)],
-            'username' => ['nullable', 'string', 'max:32', Rule::unique('admins', 'username')->ignore($admin)],
+            'name' => ['nullable', 'string', 'max:32', Rule::unique('admins', 'name')->ignore($admin)],
             'phone_number' => 'nullable|min:9|numeric',
+            'status' => 'in:active,inactive',
             'roles' => 'array',
         ]);
 
@@ -124,6 +135,7 @@ class AdminsController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('admins.delete');
         Admin::destroy($id);
         return redirect()
             ->route('dashboard.admins.index')

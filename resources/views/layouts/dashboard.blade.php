@@ -15,7 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Theme style -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     @stack('styles')
 </head>
@@ -72,8 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"
-                        role="button">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
@@ -85,9 +84,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('home') }}" class="brand-link">
-                <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                    class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">{{ Config('app.name') }}</span>
+                <img src="{{ asset('storage/' . $settings->invoice_stamp) }}" alt="AdminLTE Logo" width="30px"
+                    height="30px" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">{{ $settings->name }}</span>
             </a>
 
             <!-- Sidebar -->
@@ -95,8 +94,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('dist/img/u1.png') }}" class="img-circle elevation-2"
-                            alt="User Image">
+                        @if ($user->profile->image)
+                            <img src="{{ asset('storage/' . $user->profile->image) }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        @else
+                            <img src="{{ asset('dist/img/u1.png') }}" class="img-circle elevation-2" alt="User Image">
+                        @endif
                     </div>
                     <div class="info">
                         <a href="{{ route('dashboard.profile.edit') }}"
@@ -138,7 +141,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 @section('breadcrumb')
-                                    <li class="breadcrumb-item"><a href="{{ route('dashboard.dashboard') }}">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route('dashboard.dashboard') }}">Home</a>
+                                    </li>
                                 @show
                             </ol>
                         </div><!-- /.col -->
@@ -170,7 +174,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2023 <a href="{{ route('home') }}">Golden Store</a>.</strong> All
+            <strong>Copyright &copy; 2023 <a href="{{ route('home') }}">{{ $settings->name }}</a>.</strong> All
             rights
             reserved.
         </footer>

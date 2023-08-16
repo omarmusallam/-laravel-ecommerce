@@ -30,6 +30,10 @@ class Store extends Model
         return $this->hasMany(Product::class, 'store_id', 'id');
     }
 
+    // public function admins(){
+    //     return $this->hasOne(Admin::class, 'store_id', 'id');
+    // }
+
     public function scopeFilter(Builder $builder, $filters)
     {
         if ($filters['name'] ?? false) {

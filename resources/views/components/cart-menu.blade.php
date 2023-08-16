@@ -1,12 +1,12 @@
 <div class="cart-items">
     <a href="javascript:void(0)" class="main-btn">
         <i class="lni lni-cart"></i>
-        <span class="total-items" id="cart-items">{{ $items->count() }}</span>
+        <span class="total-items" id="cart-items">{{ $items2->count() }}</span>
     </a>
     <!-- Shopping Item -->
     <div class="shopping-item">
         <div class="dropdown-cart-header">
-            <span><span id="cart-items2">{{ $items->count() }}</span> {{ __('Items') }}</span>
+            <span><span id="cart-items2">{{ $items2->count() }}</span> {{ __('Items') }}</span>
             <a href="{{ route('cart.index') }}">{{ __('View Cart') }}</a>
         </div>
         <ul class="shopping-list" id="cart-list">
@@ -40,11 +40,9 @@
     <!--/ End Shopping Item -->
 </div>
 
-{{-- @push('scripts') --}}
 <script>
     const csrf_token = "{{ csrf_token() }}";
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-{{-- <script src="{{ asset('build/assets/js/cart.js') }}"></script> --}}
-{{-- @endpush --}}
+
 @vite('resources/js/cart.js')

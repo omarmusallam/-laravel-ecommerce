@@ -28,20 +28,18 @@ class SendOrderCreatedNotification
      * @return void
      */public function handle(OrderCreated $event)
     {
-        //$store = $event->order->store;
         $order = $event->order;
 
-        // $user = User::where('store_id', $order->store_id)->first();
-        // if ($user) {
-        //     $user->notify(new OrderCreatedNotification($order));
-        // }
-        $admin = Admin::where('store_id', $order->store_id)->first();
-        if ($admin) {
-            $admin->notify(new OrderCreatedNotification($order));
+        foreach ($order->items as $item) {
+            $store = $item->product->store;
+
+            // Find the admins associated with the store
+            $admins = Admin::where('store_id', $store->id)->get();
+
+            foreach ($admins as $admin) {
+                // Send notifications for each admin
+                $admin->notify(new OrderCreatedNotification($order));
+            }
         }
-
-        // $users = User::where('store_id', $order->store_id)->get();
-        // Notification::send($users, new OrderCreatedNotification($order));
-
     }
 }

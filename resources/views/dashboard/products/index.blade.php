@@ -7,10 +7,10 @@
 @section('content')
     <div class="mb-5">
         @if (Auth::user()->can('products.create'))
-            <a href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+            <a title="Create product" href="{{ route('dashboard.products.create') }}" class="btn btn-sm btn-outline-primary mr-2"><i class="fas fa-plus"></i></a>
         @endif
-        <a href="{{ route('dashboard.products.export', request()->query()) }}" class="btn btn-sm btn-outline-dark">Export</a>
-        <a href="{{ route('dashboard.products.import.view') }}" class="btn btn-sm btn-outline-success">Import</a>
+        <a title="Export products" href="{{ route('dashboard.products.export', request()->query()) }}" class="btn btn-sm btn-outline-dark"><i class="fas fa-download"></i></a>
+        <a title="Import products" href="{{ route('dashboard.products.import.view') }}" class="btn btn-sm btn-outline-success"><i class="fas fa-upload"></i></a>
     </div>
 
     <x-alert type="success" />
@@ -18,19 +18,15 @@
 
     <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
         <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
-        {{-- <select name="status" class="form-control mx-2">
-            <option value="">All</option>
-            <option value="active" @selected(request('status') == 'active')>Active</option>
-            <option value="draft" @selected(request('status') == 'draft')>Draft</option>
-            <option value="archvied" @selected(request('status') == 'archvied')>Archvied</option>
-        </select> --}}
         <select name="category_id" class="form-control mx-2">
             <option value="">All Categories</option>
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}">{{ $category->name }}</option>
             @endforeach
         </select>
-        <button class="btn btn-dark mx-2">Filter</button>
+        <button class="btn btn-primary mx-2">
+            <i class="fas fa-search"></i>
+        </button>
     </form>
     <table class="table">
         <thead>
@@ -59,15 +55,16 @@
                         <td>
                             @can('products.update')
                                 <a href="{{ route('dashboard.products.edit', $product->id) }}"
-                                    class="btn btn-sm btn-outline-success">Edite</a>
+                                    class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i></a>
                             @endcan
                         </td>
                         <td>
-                            @can('categories.delete')
+                            @can('products.delete')
                                 <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             @endcan
                         </td>

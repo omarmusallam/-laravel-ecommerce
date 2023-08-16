@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
@@ -17,6 +18,7 @@ class Order extends Model
         'payment_method',
         'status',
         'payment_status',
+        'total',
     ];
 
     public function store()
@@ -32,7 +34,7 @@ class Order extends Model
     }
     public function payment()
     {
-        return $this->hasOne(Payment::class, 'order_id')->withDefault(['method' => 'No','amount' => 'No','currency' => 'No', ]);
+        return $this->hasOne(Payment::class, 'order_id')->withDefault(['method' => 'No', 'amount' => 'No', 'currency' => 'No',]);
     }
 
     public function scopeFilter(Builder $builder, $filters)
@@ -89,6 +91,12 @@ class Order extends Model
         static::creating(function (Order $order) {
             // 20220001, 20220002
             $order->number = Order::getNextOrderNumber();
+        });
+        static::addGlobalScope('store', function (Builder $builder) {
+            $user = Auth::user();
+            if ($user && $user->store_id) {
+                $builder->where('store_id', '=', $user->store_id);
+            }
         });
     }
 
