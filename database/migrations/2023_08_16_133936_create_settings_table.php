@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('currency');
+            $table->string('currency')->nullable()->default('usd');
             $table->string('phone');
             $table->string('email');
-            $table->string('tax_number');
-            $table->string('website_logo');
-            $table->string('epilogue_logo');
+            $table->string('tax_number')->nullable();
+            $table->string('website_logo')->nullable();
+            $table->string('epilogue_logo')->nullable();
             $table->string('tab_logo')->nullable();
-            $table->string('qr_code');
-            $table->string('invoice_stamp');
+            $table->string('qr_code')->nullable();
+            $table->string('invoice_stamp')->nullable();
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ return [
         'route' => 'dashboard.dashboard',
         'title' => 'Home',
         'active' => 'dashboard.dashboard',
+        'ability' => 'admin.dashboard',
     ],
     [
         'icon' => 'category',
@@ -59,7 +60,7 @@ return [
     ],
     [
         'icon' => 'settings',
-        'route' => 'dashboard.setting.index',
+        'route' => 'dashboard.setting',
         'title' => 'Settings',
         'active' => 'dashboard.setting.*',
         'ability' => 'settings.view',

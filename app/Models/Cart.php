@@ -16,7 +16,11 @@ class Cart extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'cookie_id', 'user_id', 'product_id', 'quantity', 'options',
+        'cookie_id',
+        'user_id',
+        'product_id',
+        'quantity',
+        'options',
     ];
 
     // Events (Observers)
@@ -52,11 +56,6 @@ class Cart extends Model
         return $this->belongsTo(User::class)->withDefault([
             'name' => 'Anonymous',
         ]);
-    }
-
-    public function admin()
-    {
-        return $this->belongsTo(Admin::class);
     }
 
     public function product()

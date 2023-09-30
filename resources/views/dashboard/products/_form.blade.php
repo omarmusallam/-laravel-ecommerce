@@ -1,3 +1,26 @@
+@push('styles')
+    <link href="{{ asset('css/tagify.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-container .img-fit {
+            /* أي تنسيقات أخرى ترغب في تطبيقها على الصورة */
+        }
+
+        .delete-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 18px;
+            background-color: white;
+            padding: 5px;
+            border-radius: 50%;
+        }
+    </style>
+@endpush
 @if ($errors->any())
     <div class="alert alert-danger">
         <h3>Error Occured!</h3>
@@ -15,13 +38,12 @@
 
 <div class="form-group">
     <label for="">Store</label>
-    <select name="store_id" class="form-control form-select">
-        <option value="">Select Store</option>
-        @foreach (App\Models\Store::all() as $store)
-            <option value="{{ $store->id }}" @selected(old('store_id', $product->store_id) == $store->id)>{{ $store->name }}</option>
-        @endforeach
+    <select name="store_id" class="form-control form-select" disabled>
+        <option value="">{{ $admin->store->name ? $admin->store->name : '' }}</option>
     </select>
+    <input type="hidden" name="store_id" value="{{ $admin->store_id }}">
 </div>
+
 
 <div class="form-group">
     <label for="">Category</label>
@@ -46,14 +68,28 @@
     @endif
 </div>
 <div class="form-group">
+    <x-form.label>Gallery</x-form.label>
+    <x-form.input type="file" name="gallery[]" accept="image/*" multiple />
+    @if ($product->images)
+        @foreach ($product->images as $image)
+            <div class="image-container">
+                <img src="{{ $image->image_url }}" alt="img" class="img-fit m-1 border p-1" height="60">
+                <span data-image-type="gallery" data-image-id="{{ $image->id }}" title="delete image"
+                    data-product-id="{{ $product->id }}" class="fa fa-trash delete-icon text-danger"
+                    style="cursor: pointer"></span>
+            </div>
+        @endforeach
+    @endif
+</div>
+<div class="form-group">
     <x-form.input label="Price" name="price" :value="$product->price" />
 </div>
 <div class="form-group">
     <x-form.input label="Compare Price" name="compare_price" :value="$product->compare_price" />
 </div>
-{{-- <div class="form-group">
+<div class="form-group">
     <x-form.input label="Tags" name="tags" :value="$tags" />
-</div> --}}
+</div>
 <div class="form-group">
     <label for="">Status</label>
     <div>
@@ -61,18 +97,14 @@
     </div>
 </div>
 <div class="form-group">
-    <button type="submit" class="btn btn-primary">{{ $button_label ?? 'Save' }}</button>
+    <button type="submit" id="create_product" class="btn btn-primary">{{ $button_label ?? 'Save' }}</button>
 </div>
 
-@push('styles')
-    <link href="{{ asset('css/tagify.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-{{-- @push('scripts')
+@push('scripts')
     <script src="{{ asset('js/tagify.min.js') }}"></script>
     <script src="{{ asset('js/tagify.polyfills.min.js') }}"></script>
     <script>
         var inputElm = document.querySelector('[name=tags]'),
             tagify = new Tagify(inputElm);
     </script>
-@endpush --}}
+@endpush

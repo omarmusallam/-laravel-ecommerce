@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->boolean('super_admin')->default(false);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->foreignId('store_id')->nullable()->constrained('stores')->nullOnDelete();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

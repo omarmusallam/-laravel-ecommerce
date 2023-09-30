@@ -20,14 +20,10 @@ class PaymentsController extends Controller
 
     public function createStripePaymentIntent(Order $order)
     {
-        // $amount = $order->items->sum(function ($item) {
-        //     return $item->price * $item->quantity;
-        // });
-
         $stripe = App::make('stripe.client');
         $paymentIntent = $stripe->paymentIntents->create([
             'amount' => intval($order->total * 100),
-            'currency' => 'ils',
+            'currency' => $order->currency,
             'payment_method_types' => ['card'],
         ]);
 
@@ -36,7 +32,7 @@ class PaymentsController extends Controller
             $payment->forceFill([
                 'order_id' => $order->id,
                 'amount' => $order->total,
-                'currency' => 'ILS',
+                'currency' => $order->currency,
                 'method' => 'stripe',
                 'status' => 'pending',
                 'transaction_id' => $paymentIntent->id,

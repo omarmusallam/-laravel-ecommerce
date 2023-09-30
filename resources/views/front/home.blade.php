@@ -7,26 +7,24 @@
             <div class="row">
                 <div class="col-lg-8 col-12 custom-padding-right">
                     <div class="slider-head">
-                        <!-- Start Hero Slider -->
                         <div class="hero-slider">
-                            <!-- Start Single Slider -->
                             <div class="single-slider"
                                 style="background-image:url({{ asset('assets/images/parfums4.jpg') }})">
                                 <div class="content">
-                                    <h2>
-                                        {{ $product4->name }}
+                                    <h2>Parfums
                                     </h2>
-                                    <p style="color: white">{{ $product4->description }}</p>
-                                    <h3>{{ App\Helpers\Currency::format($product4->price) }}</h3>
+                                    <p style="color: white">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                                        Atque eius dolorem porro totam laudantium voluptatum, quas dolorum veritatis,
+                                        nostrum corporis cum autem pariatur esse, maiores officiis cumque eligendi
+                                        itaque deserunt!</p>
+                                    <h3>{{ App\Helpers\Currency::format(125) }}</h3>
                                     <div class="button">
                                         <a href="{{ route('list-products.index') }}"
                                             class="btn">{{ __('Shop Now') }}</a>
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Single Slider -->
                         </div>
-                        <!-- End Hero Slider -->
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
@@ -34,13 +32,11 @@
                         <div class="col-lg-12 col-md-6 col-12">
                             <!-- Start Small Banner -->
                             <div class="hero-small-banner"
-                                style="background-image:url({{ $product5->image_url }}); background-size: 70%">
+                                style="background-image:url({{ asset('assets/images/parfums2.jpg') }});">
                                 <div class="content" style="margin-top: 30px">
                                     <h2 style="font-size: 17px" dir="rtl">
-                                        {{ $product5->name }}
                                     </h2>
-                                    <h3 style="font-size: 17px" dir="rtl">
-                                        {{ App\Helpers\Currency::format($product5->price) }}</h3>
+                                    <h3 style="font-size: 17px" dir="rtl"></h3>
                                     <div class="button" style="padding-top: 30px; border-radius: 5px;">
                                         <a class="btn" style="background-color: #000; color: #fff" dir="rtl"
                                             href="{{ route('list-products.index') }}">{{ __('Shop Now') }}</a>
@@ -98,31 +94,28 @@
     <section class="banner section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
+                {{-- <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-banner"
                         style="background-image:url({{ $product6->image_url }}); background-size: 100%">
                         <div class="content">
                             <h2>{{ $product6->name }}</h2>
-                            {{-- <p style="color: white">Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p> --}}
                             <div class="button">
                                 <a href="{{ route('list-products.index') }}" class="btn">{{ __('Shop Now') }}</a>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
+                </div> --}}
+                {{-- <div class="col-lg-6 col-md-6 col-12">
                     <div class="single-banner custom-responsive-margin"
                         style="background-image:url({{ $product7->image_url }}); background-size: 100%">
                         <div class="content">
                             <h2>{{ $product7->name }}</h2>
-                            {{-- <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
-                                incididunt ut labore.</p> --}}
                             <div class="button">
                                 <a href="{{ route('list-products.index') }}" class="btn">{{ __('Shop Now') }}</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -151,15 +144,16 @@
                     </div>
                     <!-- Start Banner -->
                     <div class="single-banner right"
-                        style="background-image:url({{ $product8->image_url }});margin-top: 30px;">
+                        style="background-image:url({{ asset('assets/images/parfums3.jpg') }});margin-top: 30px;">
                         <div class="content">
-                            <h2>{{ $product8->name }}</h2>
-                            <p>{{ $product8->description }}</p>
+                            <h2>Parfums</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero ab magni aspernatur,
+                                obcaecati adipisci voluptates, maxime voluptatibus illo!</p>
                             <div class="price">
-                                <span>{{ App\Helpers\Currency::format($product8->price) }}</span>
+                                <span>{{ App\Helpers\Currency::format(120) }}</span>
                             </div>
                             <div class="button">
-                                <a href="{{ route('products.show', $product8->slug) }}"
+                                <a href="{{ route('list-products.index') }}"
                                     class="btn">{{ __('Add to Cart') }}</a>
                             </div>
                         </div>
@@ -169,14 +163,12 @@
                 <div class="col-lg-4 col-md-12 col-12">
                     <div class="offer-content">
                         <div class="image">
-                            <img src="{{ $product3->image_url }}" alt="#">
-                            @if ($product3->sale_percent)
-                                <span class="sale-tag">-{{ $product3->sale_percent }}%</span>
-                            @endif
+                            <img src="{{ asset('assets/images/parfums1.jpg') }}" alt="#">
+                            <span class="sale-tag">-20%</span>
                         </div>
 
                         <div class="text">
-                            <h2><a href="{{ route('products.show', $product3->slug) }}">{{ $product3->name }}</a></h2>
+                            <h2><a href="{{ route('list-products.index') }}">Parfum 4</a></h2>
                             <ul class="review">
                                 <li><i class="lni lni-star-filled"></i></li>
                                 <li><i class="lni lni-star-filled"></i></li>
@@ -186,14 +178,15 @@
                                 <li><span>5.0 {{ __('Review(s)') }}</span></li>
                             </ul>
                             <div class="price">
-                                <span>{{ App\Helpers\Currency::format($product3->price) }}</span>
-                                <span
-                                    class="discount-price">{{ App\Helpers\Currency::format($product3->compare_price) }}</span>
+                                <span>{{ App\Helpers\Currency::format(120) }}</span>
+                                <span class="discount-price">{{ App\Helpers\Currency::format(165) }}</span>
                             </div>
-                            <p>{{ $product3->description }}</p>
+                            <p>Magnam eius delectus modi quam, mollitia eum nemo temporibus itaque ratione laboriosam
+                                nesciunt deserunt et ut ex quo. Ducimus harum libero animi.</p>
 
-                            <div class="button" style="display: flex; justify-content: center; align-items: center;">
-                                <a href="{{ route('products.show', $product3->slug) }}" class="btn"><i
+                            <div class="button mt-4"
+                                style="display: flex; justify-content: center; align-items: center;">
+                                <a href="{{ route('list-products.index') }}" class="btn"><i
                                         class="lni lni-cart"></i>{{ __('Add to Cart') }}</a>
                             </div>
 

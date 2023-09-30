@@ -18,6 +18,23 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function deleteImage(Request $request, Category $category)
+    {
+        if ($category->image) {
+            $filePath = $category->image;
+
+            $category->update(['image' => null]);
+
+            Storage::disk('public')->delete($filePath);
+
+            return response()->json(['message' => 'Image deleted successfully.']);
+        }
+
+        return response()->json(['message' => 'Image not found.'], 404);
+    }
+
+
     public function index()
     {
         if (!Gate::allows('categories.view')) {
@@ -26,21 +43,37 @@ class CategoriesController extends Controller
         $request = request();
 
         $categories = Category::with('parent')
-            // leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
-            //     ->select([
-            //         'categories.*',
-            //         'parents.name as parent_name'
-            //     ])
-            // ->select('categories.*')
-            // ->selectRaw('(SELECT COUNT(*) FROM products WHERE category_id = categories.id) as products_count')
             ->withCount('products')
             ->filter($request->query())
             ->orderby('categories.created_at')
-            // ->withTrashed()
-            ->paginate(10); // return collection object
+            ->paginate(); // return collection object
 
         return view('dashboard.categories.index', compact('categories'));
     }
+
+    public function ajax_search(Request $request)
+    {
+        if ($request->ajax()) {
+            $search = $request->search;
+            $status = $request->status;
+
+            $query = Category::query();
+
+            if ($search !== 'restore' && !empty($search)) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            }
+
+            if (!empty($status)) {
+                $query->where('status', $status);
+            }
+
+            $categories = $query->orderBy('id', 'asc')->get();
+
+            return view('dashboard.categories.ajax', compact('categories', 'search', 'status'));
+        }
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -80,6 +113,10 @@ class CategoriesController extends Controller
         $data['image'] = $this->uploadImage($request);
 
         $category = Category::create($data);
+
+        if ($request->ajax()) {
+            return response()->json($category);
+        };
 
         return redirect()->route('dashboard.categories.index')
             ->with('success', 'Created Done!');
@@ -147,7 +184,7 @@ class CategoriesController extends Controller
         $data = $request->except('image');
 
         $new_image = $this->uploadImage($request);
-        
+
         if ($new_image) {
             $data['image'] = $new_image;
         }
@@ -167,7 +204,7 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         Gate::authorize('categories.delete');
 
@@ -179,6 +216,10 @@ class CategoriesController extends Controller
         // }
         // Category::destroy($id);
 
+        // return response()->json(['message' => 'Deleted Done!']);
+        if ($request->ajax()) {
+            return response()->json($category);
+        };
         return redirect()->route('dashboard.categories.index')
             ->with('success', 'Deleted Done!');
     }
@@ -207,11 +248,15 @@ class CategoriesController extends Controller
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
 
+        if ($request->ajax()) {
+            return response()->json($category);
+        };
+
         return redirect()->route('dashboard.categories.trash')
             ->with('success', 'Category restored!');
     }
 
-    public function forceDelete($id)
+    public function forceDelete(Request $request, $id)
     {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
@@ -219,6 +264,10 @@ class CategoriesController extends Controller
         if ($category->image) {
             Storage::disk('public')->delete($category->image);
         }
+
+        if ($request->ajax()) {
+            return response()->json($category);
+        };
 
         return redirect()->route('dashboard.categories.trash')
             ->with('success', 'Category deleted!');

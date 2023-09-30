@@ -1,5 +1,7 @@
 <x-front-layout title="{{ __('Products') }}">
-
+    @push('styles')
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+    @endpush
     <!-- Start Breadcrumbs -->
     <x-slot:breadcrumb>
         <div class="breadcrumbs">
@@ -32,11 +34,13 @@
                         <!-- Start Single Widget -->
                         <div class="single-widget search">
                             <h3>{{ __('Search Product') }}</h3>
-                            <form action="{{ URL::current() }}" method="get">
-                                <x-form.input name="slug" placeholder="{{ __('product name...') }}"
-                                    :value="request('slug')" />
+                            <form id="search-form" action="{{ route('ajax_search_list_products') }}" method="post">
+                                @csrf
+                                <x-form.input name="name" placeholder="{{ __('product name...') }}"
+                                    :value="request('name')" />
                                 <button type="submit"><i class="lni lni-search-alt"></i></button>
                             </form>
+
                         </div>
                         <!-- End Single Widget -->
                         <!-- Start Single Widget -->
@@ -66,10 +70,10 @@
                                         <label for="sorting">{{ __('Sort by:') }}</label>
                                         <select class="form-control" id="sorting">
                                             <option>{{ __('Recently Added') }}</option>
-                                            <option><a href="#">Low - High Price</a></option>
-                                            <option><a href="">High - Low Price</a></option>
-                                            <option><a href="">A - Z Product</a></option>
-                                            <option><a href="">Z - A Product</a></option>
+                                            <option><a href="">{{ __('Low - High Price') }}</a></option>
+                                            <option><a href="">{{ __('High - Low Price') }}</a></option>
+                                            <option><a href="">{{ __('A - Z Product') }}</a></option>
+                                            <option><a href="">{{ __('Z - A Product') }}</a></option>
                                         </select>
                                         <h3 class="total-show-product">{{ __('Showing') }}:
                                             {{ $products->firstItem() }} -
@@ -96,51 +100,53 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane show active fade" id="nav-grid" role="tabpanel"
-                                aria-labelledby="nav-grid-tab">
-                                <div class="row">
-                                    @foreach ($products as $product)
-                                        <div class="col-lg-4 col-md-6 col-12">
-                                            <!-- Start Single Product -->
-                                            <div class="single-product">
-                                                <div class="product-image">
-                                                    <img src="{{ $product->thumb_url }}" alt="#">
-                                                    <div class="button">
-                                                        <a href="{{ route('products.show', $product->slug) }}"
-                                                            class="btn"><i class="lni lni-cart"></i>
-                                                            {{ __('Add to Cart') }}</a>
+                        <div id="product-grid">
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane show active fade" id="nav-grid" role="tabpanel"
+                                    aria-labelledby="nav-grid-tab">
+                                    <div class="row">
+                                        @foreach ($products as $product)
+                                            <div class="col-lg-4 col-md-6 col-12">
+                                                <!-- Start Single Product -->
+                                                <div class="single-product">
+                                                    <div class="product-image">
+                                                        <img src="{{ $product->thumb_url }}" alt="#">
+                                                        <div class="button">
+                                                            <a href="{{ route('products.show', $product->slug) }}"
+                                                                class="btn"><i class="lni lni-cart"></i>
+                                                                {{ __('Add to Cart') }}</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-info">
+                                                        <span class="category">{{ $product->category->name }}</span>
+                                                        <h4 class="title">
+                                                            <a
+                                                                href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
+                                                        </h4>
+                                                        <ul class="review">
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star-filled"></i></li>
+                                                            <li><i class="lni lni-star"></i></li>
+                                                            <li><span>4.0 {{ __('Review(s)') }}</span></li>
+                                                        </ul>
+                                                        <div class="price">
+                                                            <span>{{ App\Helpers\Currency::format($product->price) }}</span>
+                                                            @if ($product->compare_price)
+                                                                <span
+                                                                    class="discount-price">{{ App\Helpers\Currency::format($product->compare_price) }}</span>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="product-info">
-                                                    <span class="category">{{ $product->category->name }}</span>
-                                                    <h4 class="title">
-                                                        <a
-                                                            href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
-                                                    </h4>
-                                                    <ul class="review">
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star"></i></li>
-                                                        <li><span>4.0 {{ __('Review(s)') }}</span></li>
-                                                    </ul>
-                                                    <div class="price">
-                                                        <span>{{ App\Helpers\Currency::format($product->price) }}</span>
-                                                        @if ($product->compare_price)
-                                                            <span
-                                                                class="discount-price">{{ App\Helpers\Currency::format($product->compare_price) }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
+                                                <!-- End Single Product -->
                                             </div>
-                                            <!-- End Single Product -->
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="mt-5" style="">
-                                    {{ $products->withQueryString()->links('pagination.custom') }}
+                                        @endforeach
+                                    </div>
+                                    <div class="mt-5" style="">
+                                        {{ $products->withQueryString()->links('pagination.custom') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -152,5 +158,32 @@
     </section>
     <!-- End Product Grids -->
 
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                // استخدم حدث input لحقل البحث للبحث أثناء الكتابة
+                $('input[name="name"]').on('input', function() {
+                    var name = $(this).val(); // النص المدخل في حقل البحث
+                    var selectedOption = $('#sorting').val(); // الخيار المحدد للترتيب
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                    // إرسال طلب Ajax للبحث بناءً على النص المدخل
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('ajax_search_list_products') }}',
+                        data: {
+                            name: name,
+                            sorting: selectedOption,
+                            _token: csrfToken
+                        },
+                        success: function(response) {
+                            // عرض نتائج البحث في الصفحة
+                            $('#product-grid').html(response);
+                        }
+                    });
+                });
+            });
+        </script>
+    @endpush
 
 </x-front-layout>

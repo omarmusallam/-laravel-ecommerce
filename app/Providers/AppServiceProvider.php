@@ -6,6 +6,7 @@ use App\Models\Setting;
 use App\Services\CurrencyConverter;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +19,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // override path_public 
+        if (\App::environment('production')) {
+            $this->app->bind('path_public', function () {
+                return base_path('public_html');
+            });
+        }
+
         $this->app->bind('currency.converter', function () {
             return new CurrencyConverter(config('services.currency_converter.api_key'));
         });
@@ -38,10 +46,8 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrapFour();
 
-        $settings = Setting::first();
-        $user = Auth::user();
 
-        view()->share('user', $user);
+        $settings = Setting::first();
         view()->share('settings', $settings);
 
         // Validator::extend('filter', function($attribute, $value, $params) {

@@ -34,6 +34,9 @@ class Product extends Model
     {
         static::addGlobalScope('store', function (Builder $builder) {
             $user = Auth::user();
+            if ($user && $user->super_admin === 1) {
+                return;
+            }
             if ($user && $user->store_id) {
                 $builder->where('store_id', '=', $user->store_id);
             }
@@ -55,6 +58,11 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id')->withDefault([
             'name' => '-'
         ]);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 
     public function store()

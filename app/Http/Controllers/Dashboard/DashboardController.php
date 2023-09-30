@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
@@ -28,6 +29,10 @@ class DashboardController extends Controller
     // Actions
     public function index()
     {
+        if (!Gate::allows('admin.dashboard')) {
+            abort(403);
+        }
+
         $title = 'Store';
         $user = Auth::user();
 

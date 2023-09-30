@@ -1,4 +1,14 @@
 <x-front-layout :title="$product->name">
+    <style>
+        .toast {
+            background-color: #0167F3;
+            color: #fff;
+        }
+
+        .toast-close-button {
+            color: #fff;
+        }
+    </style>
     <x-slot:breadcrumb>
         <div class="breadcrumbs">
             <div class="container">
@@ -24,27 +34,19 @@
     <section class="item-details section">
         <div class="container">
             <div class="top-area">
-                <div id="notice"
-                    style="display: none;
-                        background-color: #0167F3;
-                        color: white;
-                        padding: 10px;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                        margin-bottom: 10px;
-                        /* Add custom styles */
-                        position: fixed;
-                        width: 200px;
-                        top: 20px;
-                        right: 20px;
-                        z-index: 9999;">
-                </div>
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-images">
                             <main id="gallery">
                                 <div class="main-img">
                                     <img src="{{ $product->image_url }}" id="current" alt="#">
+                                </div>
+                                <div class="images">
+                                    @if ($product->images)
+                                        @foreach ($product->images as $image)
+                                            <img src="{{ $image->image_url }}" class="img" alt="#">
+                                        @endforeach
+                                    @endif
                                 </div>
                             </main>
                         </div>
@@ -110,6 +112,7 @@
                 });
             });
         </script>
+        <script src="{{ asset('js/cart.js') }}"></script>
     @endpush
 
 </x-front-layout>

@@ -1,3 +1,23 @@
+<style>
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .image-container .img-fit {
+        /* أي تنسيقات أخرى ترغب في تطبيقها على الصورة */
+    }
+
+    .delete-icon {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 18px;
+        background-color: white;
+        padding: 5px;
+        border-radius: 50%;
+    }
+</style>
 @if ($errors->any())
     <div class="alert alert-danger">
         <h3>Error Occured!</h3>
@@ -29,10 +49,14 @@
 
     <x-form.input type="file" name="image" accept="image/*" />
     @if ($category->image)
-        <img src="{{ asset('storage/' . $category->image) }}" alt="img" class="img-fit m-1 border p-1"
-            height="60">
+        <div class="image-container">
+            <img src="{{ asset('storage/' . $category->image) }}" alt="img" class="img-fit m-1 border p-1"
+                height="60">
+            <span id="delete-image-btn" class="fa fa-trash delete-icon text-danger" style="cursor: pointer"></span>
+        </div>
     @endif
 </div>
+
 <div class="form-group">
     <label for="">Status</label>
     <div>
@@ -40,5 +64,5 @@
     </div>
 </div>
 <div class="form-group">
-    <button type="submit" class="btn btn-primary">{{ $button_lable ?? 'Sava' }}</button>
+    <button id="create_category" class="btn btn-primary update_category">{{ $button_lable ?? 'Sava' }}</button>
 </div>

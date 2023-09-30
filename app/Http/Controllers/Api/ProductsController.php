@@ -26,7 +26,7 @@ class ProductsController extends Controller
         $products = Product::filter($request->query())
             ->with('category:id,name', 'store:id,name', 'tags')
             ->paginate();
-
+        
         return ProductResource::collection($products);
     }
 

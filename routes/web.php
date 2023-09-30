@@ -69,23 +69,13 @@ Route::group([
     Route::get('contact-us', [ContactController::class, 'index'])->name('contact-us');
     Route::post('contact-us', [ContactController::class, 'sendEmail'])->name('contact.send');
 
-    Route::get('mail-success', function () {
-        return view('front.mail-success');
-    })->name('mail-success');
-
-    Route::get('404', function () {
-        return view('front.404');
-    })->name('404');
-
     Route::get('faq', function () {
         return view('front.faq');
     })->name('faq');
 
-    Route::get('mail-success', function () {
-        return view('front.mail');
-    })->name('mail-success');
-
     Route::resource('list-products', ListProductsController::class);
+    Route::post('search/list-products', [ListProductsController::class, 'ajax_search'])
+        ->name('ajax_search_list_products');
 });
 
 // Login with facebook and google
@@ -117,3 +107,12 @@ Route::get('images/{disk}/{width}x{height}/{image}', [ImagesController::class, '
     ->where('image', '.*');
 
 require __DIR__ . '/dashboard.php';
+
+// copy storage folder to public folder
+Route::get('/storage/{file}', function ($file) {
+    $filepath = storage_path('app/public/' . $file);
+    if (!is_file($filepath)) {
+        abort(404);
+    }
+    return response()->file($filepath);
+})->where('file', '.*');

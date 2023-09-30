@@ -19,78 +19,21 @@ class SettingController extends Controller
     {
         Gate::authorize('settings.view');
 
-        $settings = Setting::first();
-        return view('dashboard.settings.index', compact('settings'));
+        $setting = Setting::first();
+        return view('dashboard.settings.index', compact('setting'));
     }
 
-    // public function create()
-    // {
-    // Gate::authorize('settings.create');
-    //     $setting = Setting::first();
-    //     return view('dashboard.settings.create', compact('setting'));
-    // }
-
-    // public function store(Request $request)
-    // {
-    // Gate::authorize('settings.create');
-
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'currency' => 'required|string|max:255',
-    //         'phone' => 'required|string|max:255',
-    //         'email' => 'nullable|email|max:255',
-    //         'tax_number' => 'nullable|string|max:255',
-    //         'website_logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'epilogue_logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'tab_logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'qr_code' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'invoice_stamp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //     ]);
-
-    //     $imagePaths = [];
-    //     foreach (['website_logo', 'epilogue_logo', 'tab_logo', 'qr_code', 'invoice_stamp'] as $field) {
-    //         if ($request->hasFile($field)) {
-    //             $path = $request->file($field)->store('settings', [
-    //                 'disk' => 'public'
-    //             ]);
-    //             $imagePaths[$field] = $path;
-    //         }
-    //     }
-
-    //     $settings = new Setting($validatedData);
-    //     $settings->fill($imagePaths);
-    //     $settings->save();
-
-    //     return redirect()->route('dashboard.setting.index')->with('success', 'Settings saved successfully!');
-
-    // }
-
-    public function edit($id)
+    public function store(Request $request)
     {
-        Gate::authorize('settings.update');
+        $setting = Setting::firstOrNew();
 
-        $setting = Setting::findOrFail($id);
-        return view('dashboard.settings.edit', compact('setting'));
-    }
+        if ($setting->exists) {
+            Gate::authorize('settings.update');
+        } else {
+            Gate::authorize('settings.create');
+        }
 
-    public function update(Request $request, $id)
-    {
-        Gate::authorize('settings.update');
-
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'currency' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'tax_number' => 'nullable|string|max:255',
-            'website_logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'epilogue_logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'tab_logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'qr_code' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'invoice_stamp' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $setting = Setting::findOrFail($id);
+        $validatedData = $request->validate($this->rules());
 
         $imagePaths = [];
         foreach (['website_logo', 'epilogue_logo', 'tab_logo', 'qr_code', 'invoice_stamp'] as $field) {
@@ -98,8 +41,9 @@ class SettingController extends Controller
                 if ($setting->$field && Storage::disk('public')->exists($setting->$field)) {
                     Storage::disk('public')->delete($setting->$field);
                 }
+
                 $path = $request->file($field)->store('settings', [
-                    'disk' => 'public'
+                    'disk' => 'public',
                 ]);
                 $imagePaths[$field] = $path;
             }
@@ -108,6 +52,24 @@ class SettingController extends Controller
         $setting->fill(array_merge($validatedData, $imagePaths));
         $setting->save();
 
-        return redirect()->route('dashboard.setting.index')->with('success', 'Settings updated successfully!');
+        $message = $setting->wasRecentlyCreated ? 'Settings saved successfully!' : 'Settings updated successfully!';
+
+        return redirect()->route('dashboard.setting')->with('success', $message);
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'currency' => 'nullable|string|max:255',
+            'phone' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'tax_number' => 'nullable|string|max:255',
+            'website_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'epilogue_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tab_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'qr_code' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'invoice_stamp' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ];
     }
 }

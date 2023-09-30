@@ -1,26 +1,13 @@
 <x-front-layout title="{{ __('Cart') }}">
     @push('styles')
         <style>
-            .notification-container {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-            }
-
-            .notification {
-                padding: 10px;
-                margin-bottom: 10px;
-                color: #fff;
-                border-radius: 4px;
-            }
-
-            .success {
+            .toast {
                 background-color: #0167F3;
+                color: #fff;
             }
 
-            .error {
-                background-color: #f44336;
+            .toast-close-button {
+                color: #fff;
             }
         </style>
     @endpush
@@ -170,7 +157,7 @@
             const csrf_token = "{{ csrf_token() }}";
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        {{-- <script src="{{ asset('build/assets/js/cart.js') }}"></script> --}}
+        <script src="{{ asset('js/cart.js') }}"></script>
+        {{-- @vite('js/cart.js') --}}
     @endpush
-    @vite('resources/js/cart.js')
 </x-front-layout>

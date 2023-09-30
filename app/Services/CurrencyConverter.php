@@ -19,6 +19,11 @@ class CurrencyConverter
     {
         $q = "{$from}_{$to}";
         $response = Http::baseUrl($this->baseUrl)
+            // ->withHeaders([
+            //     'Accept' => 'application/json',
+            //     'Content-Type' => 'application/json',
+            //     'Authorization' => $this->apiKey
+            // ])
             ->get('/convert', [
                 'q' => $q,
                 'compact' => 'y',

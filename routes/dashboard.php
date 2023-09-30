@@ -42,6 +42,12 @@ Route::group([
         ->name('categories.restore');
     Route::delete('categories/{category}/force-delete', [CategoriesController::class, 'forceDelete'])
         ->name('categories.force-delete');
+    Route::post('search/categories', [CategoriesController::class, 'ajax_search'])
+        ->name('ajax_search_categories');
+    Route::post('search/products', [ProductsController::class, 'ajax_search'])
+        ->name('ajax_search_products');
+    Route::post('delete-image/{category}', [CategoriesController::class, 'deleteImage'])->name('category.deleteImage');
+    Route::post('/delete-product-image/{product}', [ProductsController::class, 'deleteGalleryImage'])->name('product.deleteImage');
 
     // Jobs
     Route::get('products/import', [ImportProductsController::class, 'create'])
@@ -54,10 +60,14 @@ Route::group([
     Route::get('products/import.view', [ProductsController::class, 'importView'])
         ->name('products.import.view');
     Route::post('products.import.store', [ProductsController::class, 'import'])->name('products.import.store');
-
     // Print Orders
     Route::get('orders/{order}/print', [OrdersController::class, 'print'])
         ->name('orders.print');
+
+    // Settings
+    Route::get('setting', [SettingController::class, 'index'])
+        ->name('setting');
+    Route::post('setting', [SettingController::class, 'store']);
 
     // nav in dashboard
     Route::resources([
@@ -68,10 +78,5 @@ Route::group([
         'roles' => RolesController::class,
         'admins' => AdminsController::class,
         'users' => UsersController::class,
-        'setting' => SettingController::class,
     ]);
 });
-
-// Route::middleware('auth')->as('dashboard.')->prefix('dashboard')->group(function() {
-
-// });

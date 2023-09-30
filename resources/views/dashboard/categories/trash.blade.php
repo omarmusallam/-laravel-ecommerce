@@ -10,21 +10,13 @@
 
 @section('content')
     <div class="mb-5">
-        <a href="{{ route('dashboard.categories.index') }}" class="btn btn-sm btn-outline-primary">Back</a>
+        <a href="{{ route('dashboard.categories.index') }}" class="btn btn-sm btn-outline-primary"><i
+                class="fas fa-arrow-left"></i></a>
     </div>
 
     <x-alert type="success" />
     <x-alert type="info" />
 
-    <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
-        <x-form.input name="name" placeholder="Name" class="mx-2" :value="request('name')" />
-        <select name="status" class="form-control mx-2">
-            <option value="">All</option>
-            <option value="active" @selected(request('status') == 'active')>Active</option>
-            <option value="archived" @selected(request('status') == 'archived')>Archived</option>
-        </select>
-        <button class="btn btn-dark mx-2">Filter</button>
-    </form>
     <table class="table">
         <thead>
             <tr>
@@ -47,18 +39,12 @@
                         <td>{{ $category->status }}</td>
                         <td>{{ $category->deleted_at }}</td>
                         <td>
-                            <form action="{{ route('dashboard.categories.restore', $category->id) }}" method="POST">
-                                @csrf
-                                @method('put')
-                                <button type="submit" class="btn btn-sm btn-outline-info">Restore</button>
-                            </form>
+                            <button data-category-id="{{ $category->id }}"
+                                class="btn btn-sm btn-outline-info restore-category"><i class="fas fa-undo"></i></button>
                         </td>
                         <td>
-                            <form action="{{ route('dashboard.categories.force-delete', $category->id) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                            </form>
+                            <button class="btn btn-sm btn-outline-danger delete-category"
+                                data-category-id="{{ $category->id }}"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 @endforeach
@@ -70,4 +56,60 @@
         </tbody>
     </table>
     {{ $categories->withQueryString()->appends(['search' => 1])->links() }}
+
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                $('.delete-category').click(function() {
+                    const $button = $(this);
+                    const categoryId = $button.data('category-id');
+
+                    $.ajax({
+                        url: '/admin/dashboard/categories/' + categoryId + '/force-delete',
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            $button.closest('tr').remove();
+
+                            toastr.success('Deleted Done', '', {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: 'toast-top-right'
+                            });
+                        },
+                        error: function(xhr) {
+                            toastr.error('Failed to delete');
+                        }
+                    });
+                });
+                $('.restore-category').click(function() {
+                    const $button = $(this);
+                    const categoryId = $button.data('category-id');
+
+                    $.ajax({
+                        url: '/admin/dashboard/categories/' + categoryId + '/restore',
+                        type: 'PUT',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            $button.closest('tr').remove();
+
+                            toastr.success('Restore Done', '', {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: 'toast-top-right'
+                            });
+                        },
+                        error: function(xhr) {
+                            toastr.error('Failed to restore');
+                        }
+                    });
+                });
+
+            });
+        </script>
+    @endpush
 @endsection

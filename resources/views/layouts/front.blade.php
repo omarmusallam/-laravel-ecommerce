@@ -8,6 +8,7 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('storage/' . $settings->invoice_stamp) }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <!-- ========================= CSS here ========================= -->
 
@@ -181,7 +182,7 @@
                             <div class="nav-hotline">
                                 <i class="lni lni-phone"></i>
                                 <h3>{{ __('Phone') }} :
-                                    <span>(+970) 123 456 7890</span>
+                                    <span>{{ $settings->phone ?? '+097 123456789' }}</span>
                                 </h3>
                             </div>
                             <div class="navbar-cart">
@@ -369,40 +370,18 @@
                             <!-- Single Widget -->
                             <div class="single-footer f-contact">
                                 <h3>{{ __('Get In Touch With Us') }}</h3>
-                                <p class="phone">{{ __('Phone') }} : +1 (900) 33 169 7720</p>
+                                <p class="phone">{{ __('Phone') }} : {{ $settings->phone ?? '+097 123456789' }}
+                                </p>
                                 <ul>
                                     <li><span>{{ __('Monday - Friday') }} : </span> 9.00 am - 8.00 pm</li>
                                     <li><span>{{ __('Saturday') }} : </span> 10.00 am - 6.00 pm</li>
                                 </ul>
                                 <p class="mail">
-                                    <a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a>
+                                    <a href="mailto:{{ $settings->email }}">{{ $settings->email ?? 'email@gmail.com'}}</a>
                                 </p>
                             </div>
                             <!-- End Single Widget -->
                         </div>
-                        {{-- <div class="col-lg-3 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer our-app">
-                                <h3>Our Mobile App</h3>
-                                <ul class="app-btn">
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <i class="lni lni-apple"></i>
-                                            <span class="small-title">Download on the</span>
-                                            <span class="big-title">App Store</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <i class="lni lni-play-store"></i>
-                                            <span class="small-title">Download on the</span>
-                                            <span class="big-title">Google Play</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div> --}}
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-link">
@@ -485,6 +464,7 @@
     <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @stack('scripts')
 
 </body>

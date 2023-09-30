@@ -64,7 +64,7 @@ class AdminsController extends Controller
             'store_id' => ['nullable', 'int', 'exists:stores,id'],
             'name' => ['required', 'string', 'max:32', 'unique:admins,name'],
             'phone_number' => 'required|min:9|numeric|unique:admins,phone_number',
-            'status' => 'in:active,inactive',
+            'status' => 'nullable|in:active,inactive',
             'password' => ['nullable', 'min:9'],
             'roles' => 'array',
         ]);

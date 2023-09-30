@@ -33,21 +33,23 @@ class FortifyServiceProvider extends ServiceProvider
             //Config::set('fortify.home', 'admin/dashboard');
         }
 
-        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse
+        {
             public function toResponse($request)
             {
                 if ($request->user('admin')) {
-                    return redirect()->intended('admin/dashboard');
+                    return redirect()->intended('admin/dashboard/profile');
                 }
 
                 return redirect()->intended('/');
             }
         });
 
-        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
+        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse
+        {
             public function toResponse($request)
             {
-                return redirect('/');
+                return redirect('/admin/login');
             }
         });
     }
@@ -65,13 +67,13 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        RateLimiter::for ('login', function (Request $request) {
+        RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 
             return Limit::perMinute(5)->by($email . $request->ip());
         });
 
-        RateLimiter::for ('two-factor', function (Request $request) {
+        RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
@@ -82,15 +84,5 @@ class FortifyServiceProvider extends ServiceProvider
         } else {
             Fortify::viewPrefix('front.auth.');
         }
-
-        // Fortify::loginView(function() {
-        //     if (Config::get('fortify.guard') == 'web') {
-        //         return view ('front.auth.login');
-        //     }
-        //     return view('auth.login');
-        // });
-        // Fortify::registerView(function() {
-        //     return view('auth.register');
-        // });
     }
 }

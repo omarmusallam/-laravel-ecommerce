@@ -19,6 +19,30 @@ use Throwable;
 class ProductsController extends Controller
 {
 
+    public function deleteGalleryImage(Request $request, Product $product)
+    {
+        if (!$product) {
+            return response()->json(['message' => 'Product not found.'], 404);
+        }
+
+        if ($request->has('image_id')) {
+            $imageId = $request->input('image_id');
+            $imageToDelete = $product->images()->find($imageId);
+
+            if ($imageToDelete) {
+                $filePath = $imageToDelete->image;
+
+                $imageToDelete->delete();
+
+                Storage::disk('public')->delete($filePath);
+
+                return response()->json(['message' => 'Image deleted successfully.']);
+            }
+        }
+
+        return response()->json(['message' => 'Image not found.'], 404);
+    }
+
     public function query(Request $request)
     {
         return Product::with(['category', 'store'])
@@ -44,6 +68,28 @@ class ProductsController extends Controller
         return view('dashboard.products.index', compact('products', 'categories'));
     }
 
+    public function ajax_search(Request $request)
+    {
+        if ($request->ajax()) {
+            $search = $request->search;
+            $status = $request->status;
+
+            $query = Product::query();
+
+            if ($search !== 'restore' && !empty($search)) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            }
+
+            if (!empty($status)) {
+                $query->where('category_id', $status);
+            }
+
+            $products = $query->orderby('id', 'asc')->get();
+
+            return view('dashboard.products.ajax', compact('products', 'search', 'status'));
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -54,8 +100,9 @@ class ProductsController extends Controller
         $this->authorize('create', Product::class);
         $product = new Product();
         $tags = new Tag();
+        $admin = Auth::user();
 
-        return view('dashboard.products.create', compact('product', 'tags'));
+        return view('dashboard.products.create', compact('product', 'tags', 'admin'));
     }
 
     /**
@@ -69,7 +116,7 @@ class ProductsController extends Controller
         $this->authorize('create', Product::class);
 
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100'],
+            'name' => ['required', 'string', 'min:3', 'max:100', 'unique:products,name'],
             'store_id' => ['required', 'int', 'exists:stores,id'],
             'category_id' => ['nullable', 'int', 'exists:categories,id'],
             'description' => ['nullable', 'string'],
@@ -77,14 +124,46 @@ class ProductsController extends Controller
             'compare_price' => ['nullable', 'numeric'],
             'image' => ['image', 'max:1048576', 'dimensions:min_width=100,min_height=100'],
             'status' => 'in:active,draft,archvied',
-            // 'tags' => 'string',
+            'tags' => 'string',
         ]);
+
         $request->merge([
             'slug' => Str::slug($request->post('name'))
         ]);
+
         $data = $request->except('image');
         $data['image'] = $this->uploadImage($request);
         $product = Product::create($data);
+
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                $image = $file->store('uploads', [
+                    'disk' => 'public'
+                ]);
+                $product->images()->create([
+                    'image' => $image,
+                ]);
+            }
+        }
+
+        // Handle tags
+        $tags = json_decode($request->input('tags'));
+        $tagIds = [];
+
+        foreach ($tags as $item) {
+            $slug = Str::slug($item->value);
+            $tag = Tag::firstOrCreate([
+                'name' => $item->value,
+                'slug' => $slug,
+            ]);
+
+            $tagIds[] = $tag->id;
+        }
+
+        $product->tags()->sync($tagIds);
+        if ($request->ajax()) {
+            return response()->json($product);
+        };
 
         return redirect()->route('dashboard.products.index')
             ->with('success', 'Product created');
@@ -113,9 +192,11 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $this->authorize('update', $product);
 
+        $admin = Auth::user();
+
         $tags = implode(',', $product->tags()->pluck('name')->toArray()); // Convert to string 
 
-        return view('dashboard.products.edit', compact('product', 'tags'));
+        return view('dashboard.products.edit', compact('product', 'tags', 'admin'));
     }
 
     /**
@@ -138,7 +219,7 @@ class ProductsController extends Controller
             'compare_price' => ['nullable', 'numeric'],
             'image' => ['image', 'max:1048576', 'dimensions:min_width=100,min_height=100'],
             'status' => 'in:active,draft,archvied',
-            // 'tags' => 'string',
+            'tags' => 'string',
         ]);
 
         // $product = Product::findOrFail($product);
@@ -153,30 +234,40 @@ class ProductsController extends Controller
         }
         $product->update($data);
 
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $file) {
+                $image = $file->store('uploads', [
+                    'disk' => 'public'
+                ]);
+                $product->images()->create([
+                    'image' => $image,
+                ]);
+            }
+        }
         if ($old_image && $new_image) {
             Storage::disk('public')->delete($old_image);
         }
 
-        // $product->update($request->except('tags'));
+        $product->update($request->except('tags'));
 
-        // $tags = json_decode($request->post('tags'));
-        // $tag_ids = [];
+        $tags = json_decode($request->post('tags'));
+        $tag_ids = [];
 
-        // $saved_tags = Tag::all();
+        $saved_tags = Tag::all();
 
-        // foreach ($tags as $item) {
-        //     $slug = Str::slug($item->value);
-        //     $tag = $saved_tags->where('slug', $slug)->first();
-        //     if (!$tag) {
-        //         $tag = Tag::create([
-        //             'name' => $item->value,
-        //             'slug' => $slug,
-        //         ]);
-        //     }
-        //     $tag_ids[] = $tag->id;
-        // }
+        foreach ($tags as $item) {
+            $slug = Str::slug($item->value);
+            $tag = $saved_tags->where('slug', $slug)->first();
+            if (!$tag) {
+                $tag = Tag::create([
+                    'name' => $item->value,
+                    'slug' => $slug,
+                ]);
+            }
+            $tag_ids[] = $tag->id;
+        }
 
-        // $product->tags()->sync($tag_ids);
+        $product->tags()->sync($tag_ids);
 
 
         return redirect()->route('dashboard.products.index')
@@ -189,11 +280,15 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $product = Product::findOrFail($id);
         $this->authorize('delete', $product);
         $product->delete();
+
+        if ($request->ajax()) {
+            return response()->json($product);
+        };
 
         return redirect()->route('dashboard.products.index')
             ->with('success', 'Deleted Done!');
@@ -236,5 +331,4 @@ class ProductsController extends Controller
         ]);
         return $path;
     }
-
 }

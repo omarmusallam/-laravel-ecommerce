@@ -17,6 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @stack('styles')
 </head>
 
@@ -84,9 +85,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('home') }}" class="brand-link">
-                <img src="{{ asset('storage/' . $settings->invoice_stamp) }}" alt="AdminLTE Logo" width="30px"
-                    height="30px" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">{{ $settings->name }}</span>
+                @if ($settings && $settings->invoice_stamp)
+                    <img src="{{ asset('storage/' . $settings->invoice_stamp) }}" alt="Logo" width="30px"
+                        height="30px" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-light">{{ $settings->name }}</span>
+                @else
+                    <img src="{{ asset('assets/images/icon.png') }}" alt="Logo" width="30px" height="30px"
+                        class="brand-image img-circle elevation-3" style="opacity: .8"> <span
+                        class="brand-text font-weight-light">{{ config('app.name') }}</span>
+                @endif
             </a>
 
             <!-- Sidebar -->
@@ -174,7 +181,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2023 <a href="{{ route('home') }}">{{ $settings->name }}</a>.</strong> All
+            <strong>Copyright &copy; 2023 <a
+                    href="{{ route('home') }}">{{ $settings ? $settings->name : config('app.name') }}</a>.</strong>
+            All
             rights
             reserved.
         </footer>
@@ -184,12 +193,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/code.jquery.com_jquery-3.7.1.js') }}"></script>
+
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         const userID = "{{ Auth::id() }}";
     </script>

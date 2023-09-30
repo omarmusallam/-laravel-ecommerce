@@ -15,10 +15,6 @@ class OrdersController extends Controller
 {
     public function print(Order $order)
     {
-        // $pdf = Pdf::loadView('dashboard.orders.invoice', compact('order'));
-        // return $pdf->download('invoice.pdf');
-        // $total = Cart::total();
-        // return $pdf->stream();
         return view('dashboard.orders.invoice', compact('order'));
     }
 
@@ -61,5 +57,4 @@ class OrdersController extends Controller
         return redirect()->route('dashboard.orders.index')
             ->with('success', 'Deleted Done!');
     }
-
 }
